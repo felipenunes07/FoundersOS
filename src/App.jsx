@@ -8,7 +8,6 @@ import {
   X,
 } from "lucide-react";
 import { BrandMark } from "./founders/BrandMark";
-import { OrbitalBrainSection } from "./founders/OrbitalBrain";
 import {
   BrainAnatomy,
   CompoundingSection,
@@ -25,7 +24,6 @@ const NAV_ITEMS = [
   ["Sistema", "#sistema"],
   ["Cérebro", "#cerebro"],
   ["Obsidian", "#obsidian"],
-  ["Órbita", "#orbita"],
   ["Camadas", "#camadas"],
   ["Método", "#metodo"],
 ];
@@ -180,7 +178,6 @@ export default function App() {
         <SystemIntro />
         <ProductShowcase />
         <BrainAnatomy />
-        <OrbitalBrainSection />
         <LayerSection />
         <CompoundingSection />
         <MethodSection />
