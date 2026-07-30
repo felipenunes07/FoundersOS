@@ -1,5 +1,4 @@
 import {
-  AnimatePresence,
   motion,
   useReducedMotion,
   useScroll,
@@ -25,7 +24,6 @@ import { useRef, useState } from "react";
 import { CompoundingChart } from "./CompoundingChart";
 import { LayerDiagram } from "./LayerDiagram";
 import { ObsidianVaultDemo } from "./ObsidianWorkspace";
-import { OrbitalBrainSection } from "./OrbitalBrain";
 import {
   BrainOrbit,
   SenseInterface,
@@ -64,7 +62,6 @@ function SectionLead({ eyebrow, title, copy, centered = false, invert = false })
 
 export function Hero({ onOpen }) {
   const sectionRef = useRef(null);
-  const [visualMode, setVisualMode] = useState("obsidian");
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -131,63 +128,17 @@ export function Hero({ onOpen }) {
         </motion.div>
       </div>
 
-      <motion.div
-        className="hero-visual-switch"
-        initial={{ opacity: 0, y: -6 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.45 }}
-        aria-label="Alterar visualização do segundo cérebro"
-      >
-        <span>Visual</span>
-        {[
-          ["obsidian", "Obsidian"],
-          ["orbital", "Órbita"],
-        ].map(([value, label]) => (
-          <button
-            type="button"
-            className={visualMode === value ? "active" : ""}
-            aria-pressed={visualMode === value}
-            onClick={() => setVisualMode(value)}
-            key={value}
-          >
-            {label}
-          </button>
-        ))}
-      </motion.div>
-
       <div className="hero-product-plane" id="obsidian">
         <motion.div
           className="hero-product-stage"
           style={{ scale: visualScale, y: visualY }}
         >
-          <AnimatePresence mode="wait" initial={false}>
-            {visualMode === "obsidian" ? (
-              <motion.div
-                className="hero-visual-view"
-                key="hero-obsidian"
-                initial={{ opacity: 0, y: 12, scale: 0.985 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.99 }}
-                transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <ObsidianVaultDemo
-                  className="hero-obsidian-shell"
-                  initialSelected="foundersos"
-                />
-              </motion.div>
-            ) : (
-              <motion.div
-                className="hero-visual-view hero-orbital-shell"
-                key="hero-orbital"
-                initial={{ opacity: 0, y: 12, scale: 0.985 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.99 }}
-                transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <OrbitalBrainSection embedded />
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <div className="hero-visual-view">
+            <ObsidianVaultDemo
+              className="hero-obsidian-shell"
+              initialSelected="foundersos"
+            />
+          </div>
         </motion.div>
       </div>
 

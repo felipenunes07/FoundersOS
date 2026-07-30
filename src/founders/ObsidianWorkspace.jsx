@@ -11,11 +11,13 @@ import {
   Hash,
   Link2,
   Network,
+  Orbit,
   PanelLeft,
   Search,
   Sparkles,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { OrbitalMap } from "./OrbitalBrain";
 
 const INITIAL_NODES = [
   { id: "foundersos", label: "FoundersOS", x: 49, y: 48, kind: "core" },
@@ -328,7 +330,8 @@ function VaultTree({ selected, onSelect }) {
   );
 }
 
-function KnowledgeGraph({ selected, onSelect }) {
+function KnowledgeGraph({ selected, onSelect, view, onViewChange }) {
+  const [orbitLayer, setOrbitLayer] = useState("memory");
   const graphRef = useRef(null);
   const dragRef = useRef(null);
   const [positions, setPositions] = useState(() =>
@@ -398,16 +401,38 @@ function KnowledgeGraph({ selected, onSelect }) {
     <div className="knowledge-graph">
       <div className="graph-toolbar">
         <div>
-          <button type="button" className="active">
+          <button
+            type="button"
+            className={view === "grafo" ? "active" : ""}
+            aria-pressed={view === "grafo"}
+            onClick={() => onViewChange("grafo")}
+          >
             <Network size={12} /> Grafo
+          </button>
+          <button
+            type="button"
+            className={view === "orbita" ? "active" : ""}
+            aria-pressed={view === "orbita"}
+            onClick={() => onViewChange("orbita")}
+          >
+            <Orbit size={12} /> Órbita
           </button>
           <span className="graph-toolbar-label">
             <FileText size={12} /> Nota vinculada
           </span>
         </div>
-        <span>14 notas · 25 conexões</span>
+        <span>
+          {view === "orbita"
+            ? "4 camadas · 2.847 relações"
+            : "14 notas · 25 conexões"}
+        </span>
       </div>
 
+      {view === "orbita" ? (
+        <div className="graph-stage graph-stage-orbit">
+          <OrbitalMap activeLayer={orbitLayer} onLayerChange={setOrbitLayer} />
+        </div>
+      ) : (
       <div className="graph-stage" ref={graphRef}>
         <span className="graph-region graph-region-dna">DNA</span>
         <span className="graph-region graph-region-memory">MEMÓRIA</span>
@@ -484,6 +509,7 @@ function KnowledgeGraph({ selected, onSelect }) {
           Arraste os nodes · clique para abrir
         </div>
       </div>
+      )}
     </div>
   );
 }
@@ -574,6 +600,7 @@ export function ObsidianVaultDemo({
   initialSelected = "foundersos",
 }) {
   const [selected, setSelected] = useState(initialSelected);
+  const [view, setView] = useState("grafo");
 
   return (
     <div className={`obsidian-frame ${className}`.trim()} id={id}>
@@ -594,7 +621,12 @@ export function ObsidianVaultDemo({
 
       <div className="obsidian-frame-body">
         <VaultTree selected={selected} onSelect={setSelected} />
-        <KnowledgeGraph selected={selected} onSelect={setSelected} />
+        <KnowledgeGraph
+          selected={selected}
+          onSelect={setSelected}
+          view={view}
+          onViewChange={setView}
+        />
         <NoteInspector selected={selected} onSelect={setSelected} />
       </div>
     </div>

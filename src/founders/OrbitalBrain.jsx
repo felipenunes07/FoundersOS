@@ -11,22 +11,16 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
+/* Declarado do núcleo para fora (01 → 04), que é a ordem em que qualquer
+   lista gerada por Object.entries deve aparecer. */
 const LAYERS = {
-  applications: {
-    index: "04",
-    label: "Aplicações",
-    short: "APPS",
-    headline: "As ferramentas que alimentam e executam.",
-    copy: "E-mail, CRM, reuniões, documentos e agenda conectados ao mesmo contexto.",
-    metric: "8 fontes conectadas",
-  },
-  routines: {
-    index: "03",
-    label: "Rotinas",
-    short: "ROTINAS",
-    headline: "O trabalho recorrente ganha cadência.",
-    copy: "Briefings, follow-ups, revisões e alertas passam a rodar com memória.",
-    metric: "12 rotinas ativas",
+  skills: {
+    index: "01",
+    label: "Skills",
+    short: "SKILLS",
+    headline: "A IA aprende como sua empresa trabalha.",
+    copy: "Capacidades reutilizáveis transformam conhecimento em pesquisa, análise e execução.",
+    metric: "8 capacidades operacionais",
   },
   memory: {
     index: "02",
@@ -36,13 +30,21 @@ const LAYERS = {
     copy: "Decisões, clientes, processos e aprendizados continuam disponíveis para a próxima ação.",
     metric: "2.847 relações",
   },
-  skills: {
-    index: "01",
-    label: "Skills",
-    short: "SKILLS",
-    headline: "A IA aprende como sua empresa trabalha.",
-    copy: "Capacidades reutilizáveis transformam conhecimento em pesquisa, análise e execução.",
-    metric: "8 capacidades operacionais",
+  routines: {
+    index: "03",
+    label: "Rotinas",
+    short: "ROTINAS",
+    headline: "O trabalho recorrente ganha cadência.",
+    copy: "Briefings, follow-ups, revisões e alertas passam a rodar com memória.",
+    metric: "12 rotinas ativas",
+  },
+  applications: {
+    index: "04",
+    label: "Aplicações",
+    short: "APPS",
+    headline: "As ferramentas que alimentam e executam.",
+    copy: "E-mail, CRM, reuniões, documentos e agenda conectados ao mesmo contexto.",
+    metric: "8 fontes conectadas",
   },
 };
 
@@ -303,11 +305,8 @@ export function OrbitalMap({ activeLayer, onLayerChange }) {
   );
 }
 
-export const ORBITAL_LAYERS = LAYERS;
-
 export function OrbitalBrainSection({ embedded = false }) {
   const [activeLayer, setActiveLayer] = useState("memory");
-  const reducedMotion = useReducedMotion();
   const active = LAYERS[activeLayer];
 
   return (

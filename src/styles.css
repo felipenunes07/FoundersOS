@@ -5661,3 +5661,39 @@ main {
     grid-template-columns: 1fr;
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/* Órbita dentro do dash do Obsidian                                          */
+/* Mesma área central do grafo: o mapa entra no lugar do stage, sem sair do    */
+/* frame e sem seção/heading próprios.                                         */
+/* -------------------------------------------------------------------------- */
+
+.graph-stage-orbit {
+  position: relative;
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(34, 217, 134, 0.07), transparent 34%),
+    #090b0a;
+}
+
+/* O mapa é quadrado; limitar pela ALTURA evita estourar o frame quando a
+   coluna central é mais larga que alta. */
+.graph-stage-orbit .orbital-map {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 1;
+}
+
+@media (max-width: 1024px) {
+  .graph-stage-orbit {
+    padding: 12px;
+  }
+}
