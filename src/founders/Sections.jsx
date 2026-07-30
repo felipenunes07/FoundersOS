@@ -352,7 +352,6 @@ export function BrainAnatomy() {
           {...reveal}
           transition={{ ...reveal.transition, delay: 0.08 }}
         >
-          <div className="rainbow-rule" />
           <div className="brain-panel-top">
             <span className="hard-chip">O segundo cérebro</span>
             <span className="hard-chip live">
@@ -500,7 +499,7 @@ export function CompoundingSection() {
             title={
               <>
                 O Claude avulso é brilhante.{" "}
-                <span className="muted-title">E esquece tudo.</span>
+                <span className="muted-title">Mas esquece tudo.</span>
               </>
             }
             copy="Com o FoundersOS, cada call transcrita, documento lido e decisão registrada melhora a próxima resposta."
@@ -518,7 +517,7 @@ export function CompoundingSection() {
         <div className="reason-rail">
           {[
             ["Contexto acumulado", "O ativo cresce todos os dias."],
-            ["Método fechado", "8 semanas com Definition of Done."],
+            ["Método fechado", "4 semanas com Definition of Done."],
             ["Packs prontos", "Skills testadas e adaptadas."],
           ].map(([title, copy], index) => (
             <motion.div
@@ -540,28 +539,28 @@ export function CompoundingSection() {
 const PHASES = [
   {
     step: "01",
-    weeks: "Semanas 1–2",
+    weeks: "Semana 1",
     title: "Diagnóstico + base",
     copy: "Mapeamento, estrutura do cérebro e conectores lendo dados reais.",
     done: "Cérebro no ar",
   },
   {
     step: "02",
-    weeks: "Semanas 3–4",
+    weeks: "Semana 2",
     title: "Skills sob medida",
     copy: "Cinco skills construídas e validadas nos cenários do fundador.",
     done: "5 skills rodando",
   },
   {
     step: "03",
-    weeks: "Semanas 5–6",
+    weeks: "Semana 3",
     title: "Packs + rotinas",
     copy: "Packs Playbook Lab adaptados e rotinas automáticas agendadas.",
     done: "Sistema em ação",
   },
   {
     step: "04",
-    weeks: "Semanas 7–8",
+    weeks: "Semana 4",
     title: "Treino + autonomia",
     copy: "Documentação, vídeos, treinamento e plano de continuidade.",
     done: "Operação entregue",
@@ -576,7 +575,7 @@ export function MethodSection() {
           eyebrow="O método"
           title={
             <>
-              Dois meses. Oito reuniões.{" "}
+              Um mês. Quatro reuniões.{" "}
               <span className="muted-title">
                 Cada fase termina com algo funcionando.
               </span>
@@ -696,10 +695,10 @@ export function FinalCta({ onOpen }) {
             <p className="price-note">em 2x · sem mensalidade</p>
             <ul>
               <li>
-                <Check size={14} /> 8 semanas de implantação
+                <Check size={14} /> 4 semanas de implantação
               </li>
               <li>
-                <Check size={14} /> 8 reuniões de acompanhamento
+                <Check size={14} /> 4 reuniões de acompanhamento
               </li>
               <li>
                 <Check size={14} /> Sistema e documentação ficam com você
@@ -715,7 +714,7 @@ export function FinalCta({ onOpen }) {
             <span className="live-chip">
               <i /> Agenda aberta
             </span>
-            <h2>Seu negócio já tem contexto. Agora a IA também pode ter.</h2>
+            <h2>Pare de explicar sua empresa toda vez que abrir o chat.</h2>
             <p>
               Três perguntas rápidas. Depois, você fala direto com a equipe da
               Playbook Lab.

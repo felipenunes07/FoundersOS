@@ -36,7 +36,7 @@ const curvePath = toPath(curve);
 const flatPath = toPath(flat);
 const areaPath = `${curvePath} L${PLOT.right} ${PLOT.bottom} L${PLOT.left} ${PLOT.bottom} Z`;
 const ticks = [
-  [0.1, "Semana 8"],
+  [0.1, "Semana 4"],
   [0.34, "Mês 3"],
   [0.56, "Mês 6"],
   [0.78, "Mês 9"],
@@ -171,7 +171,7 @@ export function CompoundingChart() {
             x={pointX(0.12) + 12}
             y={PLOT.top + 6}
           >
-            SEMANA 8 · ENTREGA
+            SEMANA 4 · ENTREGA
           </text>
         </motion.g>
 

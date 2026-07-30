@@ -119,6 +119,72 @@ function createBrainGeometry(targets) {
   return { geometry, positions };
 }
 
+/* Movimento do brain do Ben AI (app/benai.html): ordem radial a partir do
+   centro de massa, cada partícula com sua janela de migração de 30% escalonada
+   pelo raio — o miolo fecha primeiro, a silhueta por último. Só as posições
+   mudam; material, cor, tamanho e densidade continuam os do original. */
+const ASSEMBLE_MS = 2800;
+const ORDER_MAX = 0.7;
+const MIGRATION_DURATION = 0.3;
+
+function createAssembly(positions) {
+  const scatter = new Float32Array(positions.length);
+  const order = new Float32Array(PARTICLE_COUNT);
+
+  /* Elipse com miolo vazio, inteira DENTRO do frame: a meia-altura visível é
+     tan(19°)*5.35 = 1.84, e qualquer coisa além disso é cortada em reta e
+     aparece como quadrado. */
+  const HOLLOW = 1.05;
+  const SPAN_X = 1.74;
+  const SPAN_Y = 1.52;
+  const SPAN_Z = 1.3;
+
+  for (let index = 0; index < PARTICLE_COUNT; index += 1) {
+    const seed = index * 7 + 3;
+    const angle = rand(seed + 1) * Math.PI * 2;
+    const reach = Math.sqrt(rand(seed + 2));
+
+    scatter[index * 3] = Math.cos(angle) * (HOLLOW + reach * (SPAN_X - HOLLOW));
+    scatter[index * 3 + 1] =
+      Math.sin(angle) * (HOLLOW + reach * (SPAN_Y - HOLLOW));
+    scatter[index * 3 + 2] = (rand(seed + 3) * 2 - 1) * SPAN_Z;
+  }
+
+  let centerX = 0;
+  let centerY = 0;
+  for (let index = 0; index < PARTICLE_COUNT; index += 1) {
+    centerX += positions[index * 3];
+    centerY += positions[index * 3 + 1];
+  }
+  centerX /= PARTICLE_COUNT;
+  centerY /= PARTICLE_COUNT;
+
+  const ranked = new Array(PARTICLE_COUNT);
+  for (let index = 0; index < PARTICLE_COUNT; index += 1) {
+    ranked[index] = {
+      index,
+      score: Math.hypot(
+        positions[index * 3] - centerX,
+        positions[index * 3 + 1] - centerY,
+      ),
+    };
+  }
+  ranked.sort((a, b) => a.score - b.score);
+  for (let rank = 0; rank < PARTICLE_COUNT; rank += 1) {
+    order[ranked[rank].index] = (rank / (PARTICLE_COUNT - 1)) * ORDER_MAX;
+  }
+
+  return { scatter, order };
+}
+
+function easedAt(order, progress) {
+  const localT = Math.max(
+    0,
+    Math.min(1, (progress - order) / MIGRATION_DURATION),
+  );
+  return 1 - Math.pow(1 - localT, 3);
+}
+
 function createNetworkGeometry(positions) {
   const sampleIndices = Array.from({ length: NETWORK_SAMPLE }, (_, index) =>
     Math.floor((index / NETWORK_SAMPLE) * PARTICLE_COUNT),
@@ -230,19 +296,23 @@ export function PointillistBrain({
 
     const { geometry: particleGeometry, positions } =
       createBrainGeometry(targets);
+    const assembly = createAssembly(positions);
     const networkGeometry = createNetworkGeometry(positions);
+
+    const particleOpacity = light ? 0.92 : 0.84;
+    const networkOpacity = light ? 0.078 : 0.11;
     const particleMaterial = new THREE.PointsMaterial({
       size: 0.0145,
       sizeAttenuation: true,
       transparent: true,
-      opacity: light ? 0.92 : 0.84,
+      opacity: particleOpacity,
       vertexColors: true,
       depthWrite: false,
     });
     const networkMaterial = new THREE.LineBasicMaterial({
       color: light ? 0x078f51 : 0x22d986,
       transparent: true,
-      opacity: light ? 0.078 : 0.11,
+      opacity: networkOpacity,
       depthWrite: false,
     });
     const particles = new THREE.Points(particleGeometry, particleMaterial);
@@ -259,6 +329,64 @@ export function PointillistBrain({
     let targetRotationX = group.rotation.x;
     let targetRotationY = group.rotation.y;
 
+    const livePoints = particleGeometry.attributes.position.array;
+    /* livePoints é o MESMO array de `positions`; os alvos precisam de cópia. */
+    const pointAnatomy = Float32Array.from(positions);
+    let assembleFrom = null;
+    let assembled = reducedMotion;
+
+    if (!reducedMotion) {
+      livePoints.set(assembly.scatter);
+      particleGeometry.attributes.position.needsUpdate = true;
+      particleMaterial.opacity = 0;
+      networkMaterial.opacity = 0;
+    }
+
+    const smooth = (x) => x * x * (3 - 2 * x);
+
+    const stepAssembly = (now) => {
+      if (assembled || assembleFrom === null) return;
+      const progress = smooth(Math.min(1, (now - assembleFrom) / ASSEMBLE_MS));
+
+      for (let index = 0; index < PARTICLE_COUNT; index += 1) {
+        const eased = easedAt(assembly.order[index], progress);
+        const offset = index * 3;
+        for (let axis = 0; axis < 3; axis += 1) {
+          const from = assembly.scatter[offset + axis];
+          livePoints[offset + axis] =
+            from + (pointAnatomy[offset + axis] - from) * eased;
+        }
+      }
+
+      particleGeometry.attributes.position.needsUpdate = true;
+
+      particleMaterial.opacity = particleOpacity * Math.min(1, progress * 4);
+      /* A teia fica parada na forma final e só entra quando o cérebro fecha.
+         Migrando junto ela virava um emaranhado de cordas longas cruzando o
+         frame inteiro — era esse o "quadrado" antes do cérebro se formar. */
+      networkMaterial.opacity =
+        networkOpacity * Math.max(0, (progress - 0.72) / 0.28);
+
+      if (progress >= 1) {
+        livePoints.set(pointAnatomy);
+        particleGeometry.attributes.position.needsUpdate = true;
+        particleMaterial.opacity = particleOpacity;
+        networkMaterial.opacity = networkOpacity;
+        assembled = true;
+      }
+    };
+
+    /* Dispara quando o cérebro entra em tela. */
+    const visibility = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        if (assembleFrom === null) assembleFrom = performance.now();
+        visibility.disconnect();
+      },
+      { threshold: 0.25 },
+    );
+    visibility.observe(canvas);
+
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
@@ -271,7 +399,8 @@ export function PointillistBrain({
     observer.observe(canvas);
     resize();
 
-    const render = () => {
+    const render = (now) => {
+      stepAssembly(now ?? performance.now());
       elapsed += 0.01;
       if (!reducedMotion) {
         group.rotation.x += (targetRotationX - group.rotation.x) * 0.035;
@@ -304,6 +433,7 @@ export function PointillistBrain({
     return () => {
       window.cancelAnimationFrame(frame);
       observer.disconnect();
+      visibility.disconnect();
       canvas.removeEventListener("pointermove", handlePointerMove);
       canvas.removeEventListener("pointerleave", handlePointerLeave);
       particleGeometry.dispose();

@@ -366,7 +366,7 @@ main {
 .playbook-signature {
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -526,7 +526,7 @@ main {
   background: transparent;
   color: #696e6b;
   cursor: pointer;
-  font-size: 9px;
+  font-size: 11px;
   transition:
     background-color 0.22s ease,
     color 0.22s ease,
@@ -592,7 +592,7 @@ main {
   padding: 0 10px;
   border-radius: 5px;
   color: #696e6b;
-  font-size: 9px;
+  font-size: 11px;
   transition:
     background-color 0.22s ease,
     color 0.22s ease;
@@ -636,7 +636,7 @@ main {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.76);
   color: #535861;
-  font-size: 11px;
+  font-size: 12px;
   box-shadow: 0 2px 5px rgba(24, 30, 39, 0.035);
   transition:
     border-color 0.4s ease,
@@ -830,7 +830,7 @@ main {
   justify-content: center;
   gap: 7px;
   color: #5f6570;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .window-actions {
@@ -856,7 +856,7 @@ main {
   gap: 6px;
   color: #4f555c;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -898,7 +898,7 @@ main {
   align-items: center;
   gap: 8px;
   padding: 0 5px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -910,7 +910,7 @@ main {
   border-radius: 6px;
   background: #1d201e;
   color: #fff;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -930,14 +930,14 @@ main {
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.72);
   color: #737985;
-  font-size: 9px;
+  font-size: 11px;
   text-align: left;
 }
 
 .quick-search span {
   margin-left: auto;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .os-sidebar nav {
@@ -1064,19 +1064,19 @@ main {
   border-radius: 50%;
   background: #232625;
   color: #fff;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
 }
 
 .prompt-line p {
   color: #9a9ea6;
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .prompt-line strong {
   display: block;
   margin-top: 3px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -1189,7 +1189,7 @@ main {
   border-top: 1px solid #dfeee6;
   background: #f3fbf7;
   color: #59645e;
-  font-size: 8px;
+  font-size: 10px;
   line-height: 1.45;
 }
 
@@ -1251,13 +1251,13 @@ main {
   border-radius: 50%;
   background: #dceee7;
   color: #1b6b4a;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 600;
 }
 
 .float-head strong {
   display: block;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .float-head p {
@@ -1288,7 +1288,7 @@ main {
 .transcript-snippet {
   margin-top: 5px;
   color: #545962;
-  font-size: 8px;
+  font-size: 10px;
   line-height: 1.45;
 }
 
@@ -1359,7 +1359,7 @@ main {
 .source-rail > span {
   color: #969ba4;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -1378,7 +1378,7 @@ main {
   align-items: center;
   gap: 7px;
   color: #646a74;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .source-rail li i {
@@ -1414,7 +1414,7 @@ main {
 .eyebrow {
   color: var(--green-deep);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1468,9 +1468,11 @@ main {
 }
 
 .system-intro .section-lead {
+  /* Alinhado com a 1ª coluna do pillar-rail: o padding aqui casa com o
+     padding de 32px do article, então o título nasce em cima do "Vê". */
   max-width: 980px;
-  margin-left: 25%;
-  padding: 0 0 92px 44px;
+  margin-left: 0;
+  padding: 0 0 92px 31px;
   border-left: 1px solid var(--line);
 }
 
@@ -1498,7 +1500,7 @@ main {
   justify-content: space-between;
   color: #9a9fa7;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .pillar-rail h3 {
@@ -1539,7 +1541,7 @@ main {
   margin-bottom: 22px;
   color: #a3a7ae;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -1622,7 +1624,7 @@ main {
 }
 
 .sense-topbar strong {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .sense-stage {
@@ -1653,7 +1655,7 @@ main {
 .sense-summary p {
   color: var(--green-deep);
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -1670,7 +1672,7 @@ main {
   display: block;
   margin-top: 7px;
   color: #737983;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.5;
 }
 
@@ -1704,7 +1706,7 @@ main {
 .mini-table-row {
   min-height: 74px;
   border-bottom: 1px solid #eceeef;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .mini-table-row:last-child {
@@ -1775,7 +1777,7 @@ main {
 .audio-line > span {
   color: #91959c;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .quote-line {
@@ -1785,7 +1787,7 @@ main {
 .quote-line span {
   color: #989da5;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .quote-line p {
@@ -1805,7 +1807,7 @@ main {
   border-top: 1px solid #d8eee2;
   background: #f2fbf6;
   color: #537160;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .decision-line svg {
@@ -1920,11 +1922,11 @@ main {
 .routine-board > div > span {
   color: #8b9098;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .routine-board strong {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -1956,8 +1958,8 @@ main {
 /* Brain anatomy */
 .brain-anatomy {
   padding: 128px 0;
-  border-top: 2px solid #151716;
-  background: #f3f4f1;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
 }
 
 .brain-anatomy .section-lead {
@@ -1965,8 +1967,7 @@ main {
 }
 
 .hard-panel {
-  border: 2px solid #151716;
-  box-shadow: 7px 7px 0 rgba(18, 19, 19, 0.11);
+  border: 1px solid var(--line);
 }
 
 .brain-panel {
@@ -1978,17 +1979,8 @@ main {
 }
 
 .brain-panel.hard-panel {
-  border: 2px solid #111;
-  border-radius: 0;
-  box-shadow: 9px 9px 0 #111;
-}
-
-.rainbow-rule {
-  position: absolute;
-  inset: 0 0 auto;
-  z-index: 5;
-  height: 4px;
-  background: var(--green-deep);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
 }
 
 .brain-panel-top {
@@ -2001,18 +1993,17 @@ main {
 }
 
 .hard-chip {
-  min-height: 38px;
+  min-height: 34px;
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 0 14px;
-  border: 2px solid #111;
-  border-radius: 0;
+  padding: 0 15px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
   background: #fff;
-  box-shadow: 5px 5px 0 #111;
-  color: #111;
+  color: var(--ink);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -2035,7 +2026,7 @@ main {
 
 .orbit-ring {
   position: absolute;
-  border: 1px dashed rgba(17, 17, 17, 0.22);
+  border: 1px dashed rgba(17, 17, 17, 0.1);
   border-radius: 50%;
 }
 
@@ -2069,15 +2060,14 @@ main {
   justify-content: center;
   padding: 0 13px;
   translate: -50% -50%;
-  border: 2px solid #111;
-  border-radius: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
   background: #fff;
-  box-shadow: 5px 5px 0 #111;
-  color: #111;
+  color: var(--ink);
   font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -2094,7 +2084,7 @@ main {
   justify-content: center;
   gap: 9px;
   padding: 20px;
-  border-top: 2px solid #111;
+  border-top: 1px solid var(--line);
   background: #fff;
   text-align: center;
 }
@@ -2108,9 +2098,9 @@ main {
 
 .brain-context-bar span {
   max-width: 720px;
-  color: #4e514e;
+  color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.045em;
   line-height: 1.5;
@@ -2122,8 +2112,8 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin: 58px auto 0;
-  border-top: 1px solid rgba(28, 29, 31, 0.16);
-  border-bottom: 1px solid rgba(28, 29, 31, 0.16);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .brain-outcomes article {
@@ -2140,7 +2130,7 @@ main {
 .brain-outcomes article > span {
   color: var(--green-deep);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .brain-outcomes h3 {
@@ -2214,7 +2204,7 @@ main {
   background: #111412;
   color: #8e9691;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .obsidian-traffic {
@@ -2248,7 +2238,7 @@ main {
 
 .obsidian-gem {
   color: var(--green);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .obsidian-sync {
@@ -2328,7 +2318,7 @@ main {
   padding: 0 8px;
   color: #d9dfdb;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .vault-root-title svg {
@@ -2395,7 +2385,7 @@ main {
   padding: 4px 7px;
   border-radius: 4px;
   color: #7e8782;
-  font-size: 8px;
+  font-size: 10px;
   text-align: left;
 }
 
@@ -2645,7 +2635,7 @@ main {
   border-color: rgba(34, 217, 134, 0.65);
   background: #151a17;
   color: #eef5f1;
-  font-size: 8px;
+  font-size: 10px;
   box-shadow: 0 0 0 5px rgba(34, 217, 134, 0.06);
 }
 
@@ -2771,7 +2761,7 @@ main {
 
 .note-callout strong {
   color: #cdd5d0;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 500;
 }
 
@@ -2796,7 +2786,7 @@ main {
   align-items: center;
   gap: 7px;
   color: #a5aea9;
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .note-facts svg {
@@ -2899,7 +2889,7 @@ main {
   grid-row: 1 / 3;
   color: var(--green-deep);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .obsidian-proof-rail strong {
@@ -2912,7 +2902,7 @@ main {
 .obsidian-proof-rail p {
   margin-top: 6px;
   color: #7a7f7c;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 /* Orbital second brain */
@@ -2976,7 +2966,7 @@ main {
   background: #101411;
   color: #89938e;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.055em;
   text-transform: uppercase;
 }
@@ -3069,7 +3059,7 @@ main {
   background: #080b09;
   color: inherit;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.11em;
 }
 
@@ -3331,7 +3321,7 @@ main {
   margin-top: 38px;
   color: var(--green);
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -3357,7 +3347,7 @@ main {
   margin-top: 23px;
   color: #d6ddd9;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 500;
 }
 
@@ -3376,7 +3366,7 @@ main {
   gap: 8px;
   border-bottom: 1px solid #222824;
   color: #69736e;
-  font-size: 10px;
+  font-size: 12px;
   text-align: left;
   transition: color 0.2s ease;
 }
@@ -3516,13 +3506,13 @@ main {
   padding-top: 3px;
   color: inherit;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .layer-tag {
   color: var(--green);
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -3588,7 +3578,7 @@ main {
 
 .dark-feature-rail span {
   color: rgba(241, 244, 242, 0.44);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 /* Compounding */
@@ -3694,7 +3684,7 @@ main {
 
 .handoff-label {
   fill: var(--green-deep);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 1.2px;
 }
 
@@ -3752,7 +3742,7 @@ main {
   grid-row: 1 / 3;
   color: var(--green-deep);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .reason-rail strong {
@@ -3805,7 +3795,7 @@ main {
   gap: 12px;
   color: #9ca1a8;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .method-index i {
@@ -3818,7 +3808,7 @@ main {
   margin-top: 70px;
   color: var(--green-deep);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -3952,9 +3942,8 @@ main {
 .final-cta-grid {
   display: grid;
   grid-template-columns: 0.8fr 1.2fr;
-  border: 2px solid #171918;
+  border: 1px solid var(--line);
   background: #fff;
-  box-shadow: 9px 9px 0 rgba(18, 19, 19, 0.11);
 }
 
 .price-column,
@@ -3964,7 +3953,7 @@ main {
 }
 
 .price-column {
-  border-right: 2px solid #171918;
+  border-right: 1px solid var(--line);
   background: var(--paper-deep);
 }
 
@@ -3993,7 +3982,7 @@ main {
   margin-top: 13px;
   color: #696d66;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .price-column ul {
@@ -4051,7 +4040,7 @@ main {
   margin-top: 13px;
   color: #90948e;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
   text-transform: uppercase;
 }
 
@@ -4101,7 +4090,7 @@ main {
   border-top: 1px solid var(--line-dark);
   color: rgba(243, 245, 243, 0.34);
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -4392,7 +4381,6 @@ main {
 .theme-dark .orbit-tool {
   border-color: #d9dedb;
   background: #f1f3f0;
-  box-shadow: 5px 5px 0 #252a27;
   color: #111412;
 }
 
@@ -4451,7 +4439,6 @@ main {
 .theme-dark .final-cta-grid {
   border-color: #343b37;
   background: #0d100e;
-  box-shadow: 9px 9px 0 rgba(34, 217, 134, 0.09);
 }
 
 .theme-dark .price-column {
@@ -4704,7 +4691,7 @@ main {
   .announcement {
     height: 34px;
     padding: 0 12px;
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .announcement a {
@@ -4847,7 +4834,7 @@ main {
   }
 
   .source-rail li {
-    font-size: 9px;
+    font-size: 11px;
   }
 
   .section-lead h2 {
@@ -5249,7 +5236,7 @@ main {
 
   .price-column {
     border-right: 0;
-    border-bottom: 2px solid #171918;
+    border-bottom: 1px solid var(--line);
   }
 
   .price-column ul {
@@ -5433,7 +5420,7 @@ main {
 
   .orbital-core strong {
     margin-top: 5px;
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .orbital-core small {
@@ -5502,5 +5489,175 @@ main {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Product showcase — formato de painel centrado (referência Playbook Lab)     */
+/* Só a geometria: cores continuam vindo dos tokens do nosso tema.             */
+/* -------------------------------------------------------------------------- */
+
+.product-showcase {
+  --showcase-panel-bg: linear-gradient(
+      110deg,
+      color-mix(in srgb, var(--green) 6%, transparent),
+      transparent 46%
+    ),
+    var(--paper-deep);
+  --showcase-panel-border: var(--line);
+  --showcase-panel-shadow: none;
+  --showcase-rail-line: var(--line);
+  --showcase-rail-idle: var(--faint);
+}
+
+.theme-dark .product-showcase {
+  --showcase-panel-bg: linear-gradient(
+      110deg,
+      color-mix(in srgb, var(--green) 5.5%, transparent),
+      transparent 46%
+    ),
+    rgba(11, 15, 12, 0.68);
+  --showcase-panel-border: rgba(255, 255, 255, 0.14);
+  --showcase-panel-shadow: 0 32px 90px rgba(0, 0, 0, 0.28);
+  --showcase-rail-line: rgba(255, 255, 255, 0.12);
+  --showcase-rail-idle: rgba(241, 245, 242, 0.28);
+}
+
+@media (min-width: 1025px) {
+  .product-showcase .showcase-shell {
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: clamp(34px, 4vw, 62px);
+    align-items: stretch;
+  }
+
+  /* Rail vertical: linha por item em vez de borda única na coluna */
+  .product-showcase .showcase-nav {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0;
+    padding: 26px 0;
+    overflow: visible;
+    border: 0;
+  }
+
+  .product-showcase .showcase-nav > span {
+    display: block;
+    margin: 0 0 20px 28px;
+  }
+
+  .product-showcase .showcase-nav button {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    height: 76px;
+    justify-content: space-between;
+    padding: 0 22px 0 28px;
+    border: 0;
+    border-left: 2px solid var(--showcase-rail-line);
+    border-radius: 0;
+    background: transparent;
+    color: var(--showcase-rail-idle);
+    font-size: 14px;
+    text-align: left;
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background 0.24s var(--ease-expo);
+  }
+
+  .product-showcase .showcase-nav button::before {
+    display: none;
+  }
+
+  .product-showcase .showcase-nav button.active,
+  .theme-dark .product-showcase .showcase-nav button.active {
+    border-left-color: var(--green);
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--green) 9%, transparent),
+      transparent 88%
+    );
+    color: var(--green-deep);
+  }
+
+  .theme-dark .product-showcase .showcase-nav button.active {
+    color: var(--green);
+  }
+
+  .product-showcase .showcase-nav button svg {
+    display: block;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .product-showcase .showcase-nav button.active svg {
+    opacity: 1;
+  }
+
+  /* Painel: copy à esquerda, interface à direita, tudo centrado */
+  .product-showcase .showcase-main {
+    min-height: 650px;
+    display: grid;
+    grid-template-columns: minmax(250px, 0.75fr) minmax(460px, 1.25fr);
+    gap: clamp(28px, 3.2vw, 52px);
+    align-items: center;
+    overflow: hidden;
+    padding: clamp(36px, 4vw, 58px);
+    border: 1px solid var(--showcase-panel-border);
+    border-radius: 28px;
+    background: var(--showcase-panel-bg);
+    box-shadow: var(--showcase-panel-shadow);
+  }
+
+  .product-showcase .showcase-copy {
+    min-height: 0;
+    display: block;
+    padding: 0;
+  }
+
+  .product-showcase .showcase-copy h2 {
+    max-width: none;
+    font-size: clamp(27px, 2.3vw, 36px);
+    line-height: 1.05;
+  }
+
+  /* A segunda frase vira parágrafo de apoio, não título esmaecido */
+  .product-showcase .showcase-copy .muted-title {
+    display: block;
+    margin-top: 22px;
+    color: var(--muted);
+    font-family: Inter, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.48;
+    letter-spacing: -0.025em;
+  }
+
+  .theme-dark .product-showcase .showcase-copy .muted-title {
+    color: rgba(241, 245, 242, 0.7);
+  }
+
+  .product-showcase .sense-window {
+    min-height: 520px;
+    border-radius: 20px;
+  }
+
+  .product-showcase .sense-stage {
+    min-height: 465px;
+  }
+}
+
+/* Entre 1025 e 1240 não cabem as duas colunas dentro do painel */
+@media (min-width: 1025px) and (max-width: 1240px) {
+  .product-showcase .showcase-shell {
+    grid-template-columns: 210px minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .product-showcase .showcase-main {
+    grid-template-columns: 1fr;
   }
 }

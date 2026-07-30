@@ -144,6 +144,167 @@ function LayerNode({
   );
 }
 
+/* Mapa orbital isolado da seção, para poder renderizar dentro do dash do
+   Obsidian sem arrastar heading, page-container e chrome junto. */
+export function OrbitalMap({ activeLayer, onLayerChange }) {
+  const reducedMotion = useReducedMotion();
+  const setActiveLayer = onLayerChange;
+
+  return (
+      <div className={`orbital-map active-${activeLayer}`}>
+        <svg
+          className="orbital-connections"
+          viewBox="0 0 100 100"
+          aria-hidden="true"
+        >
+          {APPLICATIONS.map((_, index) => {
+            const point = orbitPosition(index, APPLICATIONS.length, 44);
+            return (
+              <line
+                key={`app-line-${index}`}
+                x1="50"
+                y1="50"
+                x2={parseFloat(point.left)}
+                y2={parseFloat(point.top)}
+              />
+            );
+          })}
+        </svg>
+
+        {[
+          ["applications", 6],
+          ["routines", 16],
+          ["memory", 23],
+          ["skills", 34],
+        ].map(([layer, inset]) => (
+          <button
+            type="button"
+            className={`orbital-ring ring-${layer}`}
+            style={{ inset: `${inset}%` }}
+            onClick={() => setActiveLayer(layer)}
+            aria-label={`Destacar camada ${LAYERS[layer].label}`}
+            key={layer}
+          >
+            <span>{LAYERS[layer].short}</span>
+          </button>
+        ))}
+
+        <motion.div
+          className="orbital-tracer tracer-apps"
+          animate={
+            reducedMotion ? undefined : { rotate: [0, 360] }
+          }
+          transition={{
+            duration: 24,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        >
+          <i />
+        </motion.div>
+
+        <motion.div
+          className="orbital-tracer tracer-routines"
+          animate={
+            reducedMotion ? undefined : { rotate: [360, 0] }
+          }
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        >
+          <i />
+        </motion.div>
+
+        <div className="memory-dust" aria-hidden="true">
+          {MEMORY_DOTS.map((dot) => (
+            <i
+              key={dot.id}
+              style={{
+                left: `${dot.x}%`,
+                top: `${dot.y}%`,
+                width: `${dot.size}px`,
+                height: `${dot.size}px`,
+              }}
+            />
+          ))}
+        </div>
+
+        {APPLICATIONS.map((node, index) => (
+          <LayerNode
+            {...node}
+            layer="applications"
+            index={index}
+            total={APPLICATIONS.length}
+            radius={44}
+            active={activeLayer === "applications"}
+            onActivate={setActiveLayer}
+            named
+            key={node.label}
+          />
+        ))}
+
+        {ROUTINES.map((label, index) => (
+          <LayerNode
+            layer="routines"
+            label={label}
+            index={index}
+            total={ROUTINES.length}
+            radius={34}
+            active={activeLayer === "routines"}
+            onActivate={setActiveLayer}
+            named={index % 3 === 0}
+            key={label}
+          />
+        ))}
+
+        {MEMORY_LABELS.map((label, index) => (
+          <LayerNode
+            layer="memory"
+            label={label}
+            index={index}
+            total={MEMORY_LABELS.length}
+            radius={27}
+            active={activeLayer === "memory"}
+            onActivate={setActiveLayer}
+            named
+            key={label}
+          />
+        ))}
+
+        {SKILLS.map((label, index) => (
+          <LayerNode
+            layer="skills"
+            label={label}
+            index={index}
+            total={SKILLS.length}
+            radius={16}
+            active={activeLayer === "skills"}
+            onActivate={setActiveLayer}
+            named={index % 2 === 0}
+            key={label}
+          />
+        ))}
+
+        <button
+          type="button"
+          className="orbital-core"
+          onClick={() => setActiveLayer("memory")}
+        >
+          <span>
+            <i />
+            FoundersOS
+          </span>
+          <strong>CLAUDE.md</strong>
+          <small>núcleo de contexto</small>
+        </button>
+      </div>
+  );
+}
+
+export const ORBITAL_LAYERS = LAYERS;
+
 export function OrbitalBrainSection({ embedded = false }) {
   const [activeLayer, setActiveLayer] = useState("memory");
   const reducedMotion = useReducedMotion();
@@ -204,155 +365,10 @@ export function OrbitalBrainSection({ embedded = false }) {
           </div>
 
           <div className="orbital-frame-body">
-            <div className={`orbital-map active-${activeLayer}`}>
-              <svg
-                className="orbital-connections"
-                viewBox="0 0 100 100"
-                aria-hidden="true"
-              >
-                {APPLICATIONS.map((_, index) => {
-                  const point = orbitPosition(index, APPLICATIONS.length, 44);
-                  return (
-                    <line
-                      key={`app-line-${index}`}
-                      x1="50"
-                      y1="50"
-                      x2={parseFloat(point.left)}
-                      y2={parseFloat(point.top)}
-                    />
-                  );
-                })}
-              </svg>
-
-              {[
-                ["applications", 6],
-                ["routines", 16],
-                ["memory", 23],
-                ["skills", 34],
-              ].map(([layer, inset]) => (
-                <button
-                  type="button"
-                  className={`orbital-ring ring-${layer}`}
-                  style={{ inset: `${inset}%` }}
-                  onClick={() => setActiveLayer(layer)}
-                  aria-label={`Destacar camada ${LAYERS[layer].label}`}
-                  key={layer}
-                >
-                  <span>{LAYERS[layer].short}</span>
-                </button>
-              ))}
-
-              <motion.div
-                className="orbital-tracer tracer-apps"
-                animate={
-                  reducedMotion ? undefined : { rotate: [0, 360] }
-                }
-                transition={{
-                  duration: 24,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              >
-                <i />
-              </motion.div>
-
-              <motion.div
-                className="orbital-tracer tracer-routines"
-                animate={
-                  reducedMotion ? undefined : { rotate: [360, 0] }
-                }
-                transition={{
-                  duration: 18,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              >
-                <i />
-              </motion.div>
-
-              <div className="memory-dust" aria-hidden="true">
-                {MEMORY_DOTS.map((dot) => (
-                  <i
-                    key={dot.id}
-                    style={{
-                      left: `${dot.x}%`,
-                      top: `${dot.y}%`,
-                      width: `${dot.size}px`,
-                      height: `${dot.size}px`,
-                    }}
-                  />
-                ))}
-              </div>
-
-              {APPLICATIONS.map((node, index) => (
-                <LayerNode
-                  {...node}
-                  layer="applications"
-                  index={index}
-                  total={APPLICATIONS.length}
-                  radius={44}
-                  active={activeLayer === "applications"}
-                  onActivate={setActiveLayer}
-                  named
-                  key={node.label}
-                />
-              ))}
-
-              {ROUTINES.map((label, index) => (
-                <LayerNode
-                  layer="routines"
-                  label={label}
-                  index={index}
-                  total={ROUTINES.length}
-                  radius={34}
-                  active={activeLayer === "routines"}
-                  onActivate={setActiveLayer}
-                  named={index % 3 === 0}
-                  key={label}
-                />
-              ))}
-
-              {MEMORY_LABELS.map((label, index) => (
-                <LayerNode
-                  layer="memory"
-                  label={label}
-                  index={index}
-                  total={MEMORY_LABELS.length}
-                  radius={27}
-                  active={activeLayer === "memory"}
-                  onActivate={setActiveLayer}
-                  named
-                  key={label}
-                />
-              ))}
-
-              {SKILLS.map((label, index) => (
-                <LayerNode
-                  layer="skills"
-                  label={label}
-                  index={index}
-                  total={SKILLS.length}
-                  radius={16}
-                  active={activeLayer === "skills"}
-                  onActivate={setActiveLayer}
-                  named={index % 2 === 0}
-                  key={label}
-                />
-              ))}
-
-              <button
-                type="button"
-                className="orbital-core"
-                onClick={() => setActiveLayer("memory")}
-              >
-                <span>
-                  <i />
-                  FoundersOS
-                </span>
-                <strong>CLAUDE.md</strong>
-                <small>núcleo de contexto</small>
-              </button>
-            </div>
+            <OrbitalMap
+              activeLayer={activeLayer}
+              onLayerChange={setActiveLayer}
+            />
 
             <aside className="orbital-inspector">
               <span className="orbital-inspector-kicker">

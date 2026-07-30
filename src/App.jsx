@@ -28,7 +28,7 @@ const NAV_ITEMS = [
   ["Método", "#metodo"],
 ];
 
-function Header({ onOpen, theme, onThemeChange }) {
+function Header({ onOpen }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -64,26 +64,6 @@ function Header({ onOpen, theme, onThemeChange }) {
           </nav>
 
           <div className="header-actions">
-            <div
-              className="hero-theme-switch header-theme-toggle"
-              aria-label="Visualizar tema do site"
-            >
-              <span>Tema</span>
-              {[
-                ["dark", "Escuro"],
-                ["light", "Claro"],
-              ].map(([value, label]) => (
-                <button
-                  type="button"
-                  className={theme === value ? "active" : ""}
-                  aria-pressed={theme === value}
-                  onClick={() => onThemeChange(value)}
-                  key={value}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
             <span className="playbook-signature">por Playbook Lab</span>
             <button className="button button-dark button-small" onClick={onOpen}>
               Agendar conversa
@@ -157,7 +137,6 @@ function Footer({ onOpen }) {
 
 export default function App() {
   const [qualifierOpen, setQualifierOpen] = useState(false);
-  const [siteTheme, setSiteTheme] = useState("dark");
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, {
     stiffness: 120,
@@ -166,13 +145,9 @@ export default function App() {
   });
 
   return (
-    <div className={`site-shell theme-${siteTheme}`}>
+    <div className="site-shell theme-light">
       <motion.div className="page-progress" style={{ scaleX: progress }} />
-      <Header
-        theme={siteTheme}
-        onThemeChange={setSiteTheme}
-        onOpen={() => setQualifierOpen(true)}
-      />
+      <Header onOpen={() => setQualifierOpen(true)} />
       <main>
         <Hero onOpen={() => setQualifierOpen(true)} />
         <SystemIntro />
