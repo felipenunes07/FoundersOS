@@ -10,15 +10,12 @@ import {
   Check,
   ChevronRight,
   Clock3,
-  Eye,
   FileText,
   HardDrive,
-  Headphones,
   Lock,
   Play,
   Sparkles,
   Unplug,
-  Workflow,
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { CompoundingChart } from "./CompoundingChart";
@@ -165,64 +162,6 @@ export function Hero({ onOpen }) {
   );
 }
 
-const SYSTEM_PILLARS = [
-  {
-    label: "Vê",
-    icon: Eye,
-    copy: "Pipeline, entregas, tarefas e números.",
-  },
-  {
-    label: "Escuta",
-    icon: Headphones,
-    copy: "Calls, decisões e contexto humano.",
-  },
-  {
-    label: "Lê",
-    icon: FileText,
-    copy: "E-mails, contratos e processos.",
-  },
-  {
-    label: "Age",
-    icon: Workflow,
-    copy: "Skills e rotinas dentro da sua stack.",
-  },
-];
-
-export function SystemIntro() {
-  return (
-    <section className="system-intro grid-surface" id="sistema">
-      <div className="page-container">
-        <SectionLead
-          eyebrow="FoundersOS"
-          title={
-            <>
-              O sistema inteligente que conhece sua empresa{" "}
-              <span className="muted-title">e nunca recomeça do zero.</span>
-            </>
-          }
-        />
-
-        <div className="pillar-rail">
-          {SYSTEM_PILLARS.map(({ label, icon: Icon, copy }, index) => (
-            <motion.article
-              key={label}
-              {...reveal}
-              transition={{ ...reveal.transition, delay: index * 0.06 }}
-            >
-              <div>
-                <span>0{index + 1}</span>
-                <Icon size={16} />
-              </div>
-              <h3>{label}</h3>
-              <p>{copy}</p>
-            </motion.article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 const SENSES = [
   ["ve", "Vê"],
   ["escuta", "Escuta"],
@@ -252,7 +191,14 @@ export function ProductShowcase() {
   };
 
   return (
-    <section className="product-showcase grid-surface">
+    <section className="product-showcase grid-surface" id="sistema">
+      <div className="showcase-header">
+        <SectionLead
+          eyebrow="FoundersOS"
+          title="O sistema inteligente que conhece sua empresa"
+        />
+      </div>
+
       <div className="showcase-shell">
         <aside className="showcase-nav">
           <span>Como o sistema percebe</span>

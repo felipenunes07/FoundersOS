@@ -17,7 +17,6 @@ import {
   LocalOwnership,
   MethodSection,
   ProductShowcase,
-  SystemIntro,
 } from "./founders/Sections";
 
 const NAV_ITEMS = [
@@ -150,7 +149,6 @@ export default function App() {
       <Header onOpen={() => setQualifierOpen(true)} />
       <main>
         <Hero onOpen={() => setQualifierOpen(true)} />
-        <SystemIntro />
         <ProductShowcase />
         <BrainAnatomy />
         <LayerSection />

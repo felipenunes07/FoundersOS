@@ -81,6 +81,13 @@ body {
   overflow-x: hidden;
   background: #fff;
   color: var(--ink);
+  zoom: 0.8;
+}
+
+@media (max-width: 768px) {
+  body {
+    zoom: 1;
+  }
 }
 
 body,
@@ -1461,67 +1468,22 @@ main {
   color: rgba(241, 244, 242, 0.48);
 }
 
-/* System */
-.system-intro {
-  padding: 135px 0 0;
-  border-top: 1px solid var(--line);
-}
-
-.system-intro .section-lead {
-  /* Alinhado com a 1ª coluna do pillar-rail: o padding aqui casa com o
-     padding de 32px do article, então o título nasce em cima do "Vê". */
-  max-width: 980px;
-  margin-left: 0;
-  padding: 0 0 92px 31px;
-  border-left: 1px solid var(--line);
-}
-
-.pillar-rail {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
-.pillar-rail article {
-  min-height: 245px;
-  padding: 32px;
-  border-right: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.58);
-}
-
-.pillar-rail article:last-child {
-  border-right: 0;
-}
-
-.pillar-rail article > div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #9a9fa7;
-  font-family: var(--font-mono);
-  font-size: 11px;
-}
-
-.pillar-rail h3 {
-  margin-top: 74px;
-  font-family: var(--font-display);
-  font-size: 25px;
-  font-weight: 500;
-  letter-spacing: -0.045em;
-}
-
-.pillar-rail p {
-  max-width: 230px;
-  margin-top: 10px;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.55;
-}
-
 /* Product showcase */
 .product-showcase {
-  padding: 132px 0;
+  padding: 100px 0 120px;
+  border-top: 1px solid var(--line);
+}
+
+.showcase-header {
+  width: min(calc(100% - var(--gutter) * 2), var(--container));
+  margin: 0 auto 54px;
+}
+
+.showcase-header .section-lead {
+  max-width: 980px;
+  margin-left: 0;
+  padding-left: 31px;
+  border-left: 1px solid var(--line);
 }
 
 .showcase-shell {
@@ -1532,7 +1494,7 @@ main {
 }
 
 .showcase-nav {
-  padding: 168px 26px 0 0;
+  padding: 8px 26px 0 0;
   border-right: 1px solid var(--line);
 }
 
