@@ -83,10 +83,12 @@ export function LayerDiagram({ active, onChange }) {
               }
               transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
             />
+            {/* 58 de largura: cabe o rótulo ampliado que telas estreitas usam
+                sem depender de mexer na geometria do rect via CSS. */}
             <rect
-              x={connector.x2 - 26}
+              x={connector.x2 - 29}
               y={connector.y2 - 12}
-              width="52"
+              width="58"
               height="24"
               rx="5"
               fill="#0b0d0c"

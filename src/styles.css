@@ -453,6 +453,12 @@ main {
   left: 12px;
   z-index: 1099;
   display: none;
+  flex-direction: column;
+  align-items: stretch;
+  max-height: calc(100vh - 84px);
+  max-height: calc(100dvh - 84px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 14px;
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -1973,6 +1979,8 @@ main {
 }
 
 .brain-orbit {
+  --orbit-radius: 40%;
+
   position: relative;
   width: min(92%, 720px);
   aspect-ratio: 1;
@@ -4079,8 +4087,11 @@ main {
   position: fixed;
   inset: 0;
   z-index: 3000;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 20px;
   background: rgba(4, 6, 5, 0.68);
   backdrop-filter: blur(8px);
@@ -4088,7 +4099,14 @@ main {
 
 .qualifier-dialog {
   width: min(100%, 560px);
+  max-height: calc(100vh - 40px);
+  max-height: calc(100dvh - 40px);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+  /* Mantém o painel centrado e ainda rolável quando ele fica mais alto que a
+     viewport; só com `align-items: center` o topo seria cortado. */
+  margin: auto;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   background: #fff;
@@ -4097,6 +4115,7 @@ main {
 
 .dialog-head {
   height: 62px;
+  flex: 0 0 62px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -4116,6 +4135,7 @@ main {
 
 .dialog-progress {
   height: 2px;
+  flex: 0 0 2px;
   background: #eef0f1;
 }
 
@@ -4128,6 +4148,9 @@ main {
 
 .dialog-body {
   min-height: 430px;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 52px 52px 44px;
 }
 
@@ -5635,20 +5658,573 @@ main {
   background:
     radial-gradient(circle at 50% 50%, rgba(34, 217, 134, 0.07), transparent 34%),
     #090b0a;
+  container-type: size;
 }
 
-/* O mapa é quadrado; limitar pela ALTURA evita estourar o frame quando a
-   coluna central é mais larga que alta. */
+/* O mapa é quadrado: o lado é o menor entre largura e altura disponíveis, então
+   ele nunca estoura o frame nem vira elipse quando a coluna é mais larga que
+   alta (ou o contrário, em telas estreitas). */
 .graph-stage-orbit .orbital-map {
-  width: auto;
-  height: 100%;
+  width: min(100cqw, 100cqh);
+  height: min(100cqw, 100cqh);
   max-width: 100%;
   max-height: 100%;
+  margin: 0;
   aspect-ratio: 1;
 }
 
 @media (max-width: 1024px) {
   .graph-stage-orbit {
     padding: 12px;
+  }
+}
+
+/* ==========================================================================
+   Camada responsiva consolidada
+   Corrige o que quebrava fora do desktop e desenha o tablet de propósito.
+   Fica no fim do arquivo de propósito: sobrepõe os blocos antigos sem
+   precisar reescrevê-los.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Navegação móvel — empilhar de verdade
+   `display: flex` sem direção deixava os links em linha e jogava o CTA
+   "Agendar conversa" para fora da viewport em telas de 375px.
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .mobile-nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mobile-nav > a {
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+  .mobile-nav > a:last-of-type {
+    border-bottom: 0;
+  }
+
+  .mobile-nav .button {
+    flex: 0 0 auto;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. Tablet (761–1024px) — layout próprio, não desktop espremido
+   -------------------------------------------------------------------------- */
+@media (min-width: 761px) and (max-width: 1024px) {
+  html {
+    scroll-padding-top: 84px;
+  }
+
+  /* Vault: os três painéis ainda cabem, mas as colunas laterais precisam
+     ceder espaço para o grafo. */
+  .obsidian-frame-body,
+  .hero-obsidian-shell .obsidian-frame-body {
+    grid-template-columns: 178px minmax(0, 1fr) 240px;
+  }
+
+  /* Cabeçalhos de duas colunas: a coluna de apoio fica estreita demais. */
+  .obsidian-section-head,
+  .orbital-section-head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 26px;
+  }
+
+  .obsidian-section-head > p,
+  .orbital-section-head > p {
+    max-width: 620px;
+  }
+
+  /* Pílulas horizontais do showcase: sem barra visível e sem cortar a
+     última pílula. */
+  .showcase-nav {
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .showcase-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .brain-orbit {
+    --orbit-radius: 37%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2b. Tablet estreito (761–900px) — três painéis e três colunas não cabem
+   -------------------------------------------------------------------------- */
+@media (min-width: 761px) and (max-width: 900px) {
+  /* Vault: fica explorador + grafo; o painel da nota sai. */
+  .obsidian-frame-body,
+  .hero-obsidian-shell .obsidian-frame-body {
+    grid-template-columns: 190px minmax(0, 1fr);
+  }
+
+  .note-inspector {
+    display: none;
+  }
+
+  /* Trilhas de três colunas ficavam com ~170px de conteúdo em 768px. */
+  .obsidian-proof-rail,
+  .reason-rail,
+  .ownership-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .obsidian-proof-rail > div,
+  .reason-rail > div,
+  .ownership-grid article {
+    padding: 26px 22px;
+  }
+
+  .obsidian-proof-rail > div:nth-child(2n),
+  .reason-rail > div:nth-child(2n),
+  .ownership-grid article:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .obsidian-proof-rail > div:nth-last-child(n + 2),
+  .reason-rail > div:nth-last-child(n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ownership-grid article:nth-last-child(n + 2) {
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  /* Última célula ímpar ocupa a linha inteira em vez de deixar buraco. */
+  .obsidian-proof-rail > div:last-child:nth-child(odd),
+  .reason-rail > div:last-child:nth-child(odd),
+  .ownership-grid article:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    border-right: 0;
+  }
+
+  /* CTA final: 281px na coluna de preço deixava o número encostando na
+     borda. Empilha e ganha respiro. */
+  .final-cta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .price-column,
+  .cta-column {
+    min-height: 0;
+    padding: 48px 40px;
+  }
+
+  .price-column {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .theme-dark .price-column {
+    border-right-color: transparent;
+    border-bottom-color: #343b37;
+  }
+
+  .price-column ul {
+    margin-top: 38px;
+  }
+
+  .cta-column {
+    padding-top: 52px;
+    padding-bottom: 56px;
+  }
+
+  /* Rodapé: três colunas viravam 194/233/155px. */
+  .footer-top {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 24px 36px;
+    padding-bottom: 44px;
+  }
+
+  .footer-top > :first-child {
+    grid-area: 1 / 1;
+  }
+
+  .footer-top > p {
+    grid-area: 2 / 1;
+    max-width: 520px;
+  }
+
+  .footer-contact {
+    grid-area: 1 / 2;
+    align-self: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. Mobile — devolver legibilidade
+   Os overrides antigos reduziam textos para 4,5–7px, bem abaixo do que o
+   desktop usa. Aqui eles voltam para perto do valor original.
+   -------------------------------------------------------------------------- */
+@media (max-width: 760px) {
+  html {
+    scroll-padding-top: 76px;
+  }
+
+  .hero-pill {
+    min-height: 32px;
+    font-size: 12px;
+  }
+
+  .brain-orbit {
+    --orbit-radius: 32%;
+  }
+
+  .orbit-tool {
+    min-width: 0;
+    min-height: 32px;
+    gap: 5px;
+    padding: 0 9px;
+    font-size: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .orbit-tool svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .hard-chip {
+    min-height: 28px;
+    padding: 0 10px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .brain-context-bar span {
+    max-width: 340px;
+    font-size: 9.5px;
+    letter-spacing: 0.035em;
+  }
+
+  .graph-node {
+    font-size: 7px;
+  }
+
+  .graph-node.node-core {
+    font-size: 9px;
+  }
+
+  .graph-region {
+    font-size: 7.5px;
+  }
+
+  .routine-board i {
+    padding: 4px 7px;
+    font-size: 7.5px;
+  }
+
+  /* Transcrição: 46 barras de 2px + gaps fixos davam 182px de largura mínima
+     e empurravam o timestamp para fora do painel. */
+  .audio-line {
+    grid-template-columns: 30px minmax(0, 1fr) auto;
+    gap: 10px;
+    padding: 0 13px;
+  }
+
+  .waveform.wide {
+    overflow: hidden;
+    justify-content: space-between;
+  }
+
+  .waveform.wide i:nth-child(n + 25) {
+    display: none;
+  }
+
+  .quote-line {
+    padding: 20px 14px;
+  }
+
+  .quote-line p {
+    font-size: 14px;
+  }
+
+  .decision-line {
+    min-height: 0;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    padding: 12px 14px;
+  }
+
+  .orbital-core {
+    width: 30%;
+  }
+
+  .orbital-core > span {
+    font-size: 6.5px;
+  }
+
+  .orbital-core strong {
+    font-size: 13px;
+  }
+
+  .orbital-ring > span {
+    top: -8px;
+    padding: 2px 6px;
+    font-size: 7px;
+  }
+}
+
+@media (max-width: 420px) {
+  .brain-orbit {
+    --orbit-radius: 30%;
+  }
+
+  .orbit-tool {
+    min-height: 29px;
+    padding: 0 7px;
+    font-size: 7.5px;
+  }
+
+  .hard-chip {
+    padding: 0 8px;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+  }
+
+  .waveform.wide i:nth-child(n + 17) {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Gráfico de composição
+   O SVG tem viewBox de 1240 unidades e largura fluida, então todo o texto
+   encolhe junto com o container: 12 unidades viravam 6,5px reais no laptop e
+   3,3px no celular. Os tamanhos abaixo mantêm o texto renderizado por volta
+   de 10–14px em cada faixa. Os títulos em caixa alta só crescem a partir de
+   1240px para baixo, quando a régua decorativa entre eles é escondida.
+   -------------------------------------------------------------------------- */
+.compounding-chart .chart-tick {
+  font-size: 22px;
+}
+
+.compounding-chart .handoff-label {
+  font-size: 20px;
+}
+
+.compounding-chart .chart-label {
+  font-size: 26px;
+}
+
+@media (max-width: 1240px) {
+  .compounding-chart .chart-heading,
+  .compounding-chart .chart-tick,
+  .compounding-chart .handoff-label {
+    font-size: 22px;
+  }
+
+  .compounding-chart .chart-label {
+    font-size: 28px;
+  }
+
+  /* A régua entre os dois títulos colide com o texto ampliado. */
+  .compounding-chart .chart-heading-rule {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .compounding-chart .chart-heading,
+  .compounding-chart .chart-tick,
+  .compounding-chart .handoff-label {
+    font-size: 19px;
+  }
+
+  .compounding-chart .chart-label {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 760px) {
+  .compounding-chart .chart-heading,
+  .compounding-chart .chart-tick,
+  .compounding-chart .handoff-label {
+    font-size: 21px;
+  }
+
+  .compounding-chart .chart-label {
+    font-size: 25px;
+  }
+
+  /* "CONTEXTO DISPERSO" fica logo abaixo da linha cinza; quanto maior o
+     rótulo, mais ele precisa descer para não encostar nela. */
+  .compounding-chart .flat-label {
+    transform: translateY(6px);
+  }
+}
+
+@media (max-width: 660px) {
+  .compounding-chart .chart-heading,
+  .compounding-chart .chart-tick,
+  .compounding-chart .handoff-label {
+    font-size: 24px;
+  }
+
+  .compounding-chart .chart-label {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 560px) {
+  .compounding-chart .chart-heading,
+  .compounding-chart .chart-tick,
+  .compounding-chart .handoff-label {
+    font-size: 29px;
+  }
+
+  .compounding-chart .chart-label {
+    font-size: 30px;
+  }
+
+  .compounding-chart .flat-label {
+    transform: translateY(11px);
+  }
+
+  .compounding-chart .chart-axis {
+    stroke-width: 3.4;
+  }
+
+  .compounding-chart .chart-growth {
+    stroke-width: 6;
+  }
+
+  .compounding-chart .chart-flat {
+    stroke-width: 4.5;
+  }
+
+  .compounding-chart .chart-marker {
+    r: 15px;
+  }
+
+  .compounding-chart .chart-marker-core {
+    r: 5.5px;
+  }
+
+  /* Em telas estreitas os dois títulos não cabem lado a lado. */
+  .compounding-chart .chart-heading-time {
+    display: none;
+  }
+}
+
+@media (max-width: 430px) {
+  .compounding-chart .chart-heading,
+  .compounding-chart .chart-tick,
+  .compounding-chart .handoff-label {
+    font-size: 38px;
+  }
+
+  .compounding-chart .chart-label {
+    font-size: 38px;
+  }
+
+  .compounding-chart .flat-label {
+    transform: translateY(12px);
+  }
+
+  .compounding-chart .chart-marker {
+    r: 18px;
+  }
+
+  .compounding-chart .chart-marker-core {
+    r: 6.5px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4b. Diagrama de camadas
+   Mesmo problema do gráfico: viewBox de 660 unidades com largura fluida. O
+   SVG só encolhe abaixo de ~726px de viewport (antes disso ele bate no
+   `max-width: 690px`), então as faixas começam aí.
+   -------------------------------------------------------------------------- */
+@media (max-width: 725px) {
+  .layer-svg text[font-size="9"] {
+    font-size: 10px;
+  }
+
+  .layer-svg text[font-size="11"] {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .layer-svg text[font-size="9"] {
+    font-size: 12px;
+  }
+
+  .layer-svg text[font-size="11"] {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .layer-svg text[font-size="9"] {
+    font-size: 15px;
+  }
+
+  .layer-svg text[font-size="11"] {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 390px) {
+  .layer-svg text[font-size="9"] {
+    font-size: 19px;
+  }
+
+  .layer-svg text[font-size="11"] {
+    font-size: 22px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. Viewports baixas (celular deitado, notebooks curtos)
+   Sem isto o diálogo de qualificação ficava com topo e base cortados e sem
+   rolagem nenhuma.
+   -------------------------------------------------------------------------- */
+@media (max-height: 660px) {
+  .dialog-body {
+    min-height: 0;
+    padding: 30px 26px 26px;
+  }
+
+  .dialog-body h2 {
+    font-size: clamp(22px, 4.4vw, 30px);
+  }
+
+  .answer-list {
+    margin-top: 22px;
+  }
+
+  .answer-list button {
+    min-height: 50px;
+  }
+
+  .dialog-result > p {
+    margin-top: 12px;
+  }
+
+  .dialog-result .button {
+    margin-top: 20px;
+  }
+
+  .mobile-nav {
+    max-height: calc(100vh - 74px);
+    max-height: calc(100dvh - 74px);
+  }
+}
+
+@media (max-height: 560px) and (max-width: 1024px) {
+  .hero-copy {
+    padding-top: 46px;
+    padding-bottom: 30px;
   }
 }
