@@ -74,13 +74,19 @@ export function CompoundingChart() {
           INTELIGÊNCIA ACUMULADA
         </text>
         <line
+          className="chart-heading-rule"
           x1="310"
           y1="57"
           x2="930"
           y2="57"
           stroke="rgba(16,18,17,.16)"
         />
-        <text className="chart-heading" x={WIDTH - 64} y="62" textAnchor="end">
+        <text
+          className="chart-heading chart-heading-time"
+          x={WIDTH - 64}
+          y="62"
+          textAnchor="end"
+        >
           TEMPO DESDE O DIA 1
         </text>
 

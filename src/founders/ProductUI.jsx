@@ -422,13 +422,15 @@ export function BrainOrbit() {
       </div>
       {tools.map(([Icon, label], index) => {
         const angle = (index / tools.length) * Math.PI * 2 - Math.PI / 2;
+        // O raio vem do CSS (--orbit-radius) para que telas estreitas possam
+        // aproximar as pastilhas do centro sem que elas saiam do painel.
         return (
           <motion.div
             className="orbit-tool"
             key={label}
             style={{
-              left: `${50 + Math.cos(angle) * 40}%`,
-              top: `${50 + Math.sin(angle) * 40}%`,
+              left: `calc(50% + ${Math.cos(angle).toFixed(4)} * var(--orbit-radius))`,
+              top: `calc(50% + ${Math.sin(angle).toFixed(4)} * var(--orbit-radius))`,
             }}
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
