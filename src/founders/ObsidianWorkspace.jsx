@@ -32,7 +32,9 @@ const INITIAL_NODES = [
   { id: "pipeline", label: "Pipeline", x: 83, y: 62, kind: "source" },
   { id: "onboarding", label: "Onboarding", x: 59, y: 91, kind: "skill" },
   { id: "briefing", label: "Briefing diário", x: 33, y: 92, kind: "routine" },
-  { id: "finance", label: "Financeiro", x: 91, y: 79, kind: "source" },
+  // x: 87 e não 91 — em telas estreitas o palco fica com ~334px e o rótulo
+  // encostava na borda direita, que é clipada pelo overflow do palco.
+  { id: "finance", label: "Financeiro", x: 87, y: 79, kind: "source" },
   { id: "followup", label: "Follow-up", x: 88, y: 21, kind: "routine" },
 ];
 

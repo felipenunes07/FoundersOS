@@ -29,12 +29,38 @@ const CONNECTORS = ["CRM", "Gmail", "Drive", "tl;dv"].map((label, index) => {
   };
 });
 
+/* Alvo de toque invisível cobrindo a faixa inteira entre dois raios. Sem isto
+   a única área sensível de cada camada é o traço de 1px do anel — inalcançável
+   no dedo, e no mobile não existe hover para compensar. */
+function HitBand({ from, to }) {
+  return (
+    <circle
+      cx={CENTER}
+      cy={CENTER}
+      r={(from + to) / 2}
+      fill="none"
+      stroke="transparent"
+      strokeWidth={to - from}
+      pointerEvents="stroke"
+    />
+  );
+}
+
 export function LayerDiagram({ active, onChange }) {
   const reducedMotion = useReducedMotion();
   const ringStyle = (layer) => ({
     stroke: active === layer ? "var(--green)" : "currentColor",
     opacity: active === layer ? 1 : 0.18,
   });
+  // Hover cobre o desktop; click cobre o toque (e o clique do mouse também).
+  const layerEvents = (layer) => ({
+    onMouseEnter: () => onChange(layer),
+    onClick: () => onChange(layer),
+  });
+  const layerStyle = {
+    transformOrigin: `${CENTER}px ${CENTER}px`,
+    cursor: "pointer",
+  };
 
   return (
     <svg
@@ -51,13 +77,14 @@ export function LayerDiagram({ active, onChange }) {
       </defs>
 
       <motion.g
-        onMouseEnter={() => onChange(4)}
+        {...layerEvents(4)}
         initial={{ opacity: 0, scale: 0.94 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: reducedMotion ? 0 : 0.7, delay: 0.24 }}
-        style={{ transformOrigin: `${CENTER}px ${CENTER}px` }}
+        style={layerStyle}
       >
+        <HitBand from={RADII[2]} to={RADII[3]} />
         <circle
           cx={CENTER}
           cy={CENTER}
@@ -111,13 +138,14 @@ export function LayerDiagram({ active, onChange }) {
       </motion.g>
 
       <motion.g
-        onMouseEnter={() => onChange(3)}
+        {...layerEvents(3)}
         initial={{ opacity: 0, scale: 0.94 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: reducedMotion ? 0 : 0.7, delay: 0.16 }}
-        style={{ transformOrigin: `${CENTER}px ${CENTER}px` }}
+        style={layerStyle}
       >
+        <HitBand from={RADII[1]} to={RADII[2]} />
         <circle
           cx={CENTER}
           cy={CENTER}
@@ -152,13 +180,14 @@ export function LayerDiagram({ active, onChange }) {
       </motion.g>
 
       <motion.g
-        onMouseEnter={() => onChange(2)}
+        {...layerEvents(2)}
         initial={{ opacity: 0, scale: 0.94 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: reducedMotion ? 0 : 0.7, delay: 0.08 }}
-        style={{ transformOrigin: `${CENTER}px ${CENTER}px` }}
+        style={layerStyle}
       >
+        <HitBand from={RADII[0]} to={RADII[1]} />
         <circle
           cx={CENTER}
           cy={CENTER}
@@ -190,12 +219,12 @@ export function LayerDiagram({ active, onChange }) {
       </motion.g>
 
       <motion.g
-        onMouseEnter={() => onChange(1)}
+        {...layerEvents(1)}
         initial={{ opacity: 0, scale: 0.94 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: reducedMotion ? 0 : 0.7 }}
-        style={{ transformOrigin: `${CENTER}px ${CENTER}px` }}
+        style={layerStyle}
       >
         {!reducedMotion && (
           <motion.circle
@@ -203,6 +232,9 @@ export function LayerDiagram({ active, onChange }) {
             cy={CENTER}
             r={RADII[0] + 32}
             fill="url(#core-glow)"
+            // Só decorativo: sem isto o halo (raio 100, desenhado por último)
+            // cobre a faixa da Memória e rouba o toque dela.
+            pointerEvents="none"
             animate={{ opacity: [0.4, 0.75, 0.4], scale: [0.94, 1.04, 0.94] }}
             transition={{ duration: 3.2, repeat: Infinity }}
             style={{ transformOrigin: `${CENTER}px ${CENTER}px` }}

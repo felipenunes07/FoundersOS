@@ -78,7 +78,11 @@ html {
 body {
   margin: 0;
   min-width: 320px;
+  /* `clip` corta igual a `hidden` mas não cria um scroll container, então
+     `position: sticky` continua funcionando lá dentro. A linha `hidden` fica
+     como fallback para navegadores que não conhecem `clip`. */
   overflow-x: hidden;
+  overflow-x: clip;
   background: #fff;
   color: var(--ink);
 }
@@ -159,7 +163,9 @@ main {
 
 .dark-surface {
   position: relative;
+  /* idem: `hidden` aqui quebrava o sticky do diagrama de camadas */
   overflow: hidden;
+  overflow: clip;
   background: var(--black);
   color: #f3f5f3;
 }
@@ -6140,6 +6146,180 @@ main {
 }
 
 /* --------------------------------------------------------------------------
+   3a. Respiro entre seções
+   96px em cima + 96px embaixo somam quase 200px de vazio entre blocos numa
+   tela de 375px — proporcional num canvas de 1400px, mas no celular lê como
+   falha de renderização, ainda mais com o fundo quadriculado à mostra.
+   -------------------------------------------------------------------------- */
+@media (max-width: 760px) {
+  .product-showcase,
+  .brain-anatomy,
+  .obsidian-section,
+  .compounding-section,
+  .method-section,
+  .ownership-section,
+  .final-cta-section {
+    padding-top: 66px;
+    padding-bottom: 66px;
+  }
+
+  .layer-section {
+    padding-top: 66px;
+  }
+
+  .showcase-header {
+    margin-bottom: 34px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-showcase,
+  .brain-anatomy,
+  .obsidian-section,
+  .compounding-section,
+  .method-section,
+  .ownership-section,
+  .final-cta-section {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .layer-section {
+    padding-top: 56px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3b. Seção de camadas — o diagrama precisa acompanhar a lista
+   No desktop `.layer-visual` é sticky, então o anel destacado muda enquanto a
+   lista rola. No mobile o sticky era removido: o diagrama saía da tela antes
+   do primeiro item mudar a camada ativa, e sobrava um quadrado escuro e
+   estático. Trocar o grid por block devolve o sticky (num grid o bloco de
+   contenção do sticky é a própria área da linha, que não ajuda aqui).
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .layer-layout {
+    display: block;
+  }
+
+  .layer-visual {
+    position: sticky;
+    top: 62px;
+    z-index: 2;
+    min-height: 0;
+    margin-bottom: 26px;
+    padding: 12px 0 16px;
+    /* opaco: a lista rola por baixo do diagrama */
+    background: var(--black);
+  }
+
+  .layer-svg {
+    width: min(100%, 330px);
+  }
+
+  .layer-list {
+    padding-bottom: 40px;
+  }
+
+  /* Contraste: 0.18 de branco sobre quase-preto desaparece em tela de
+     celular. Os anéis vêm com opacity inline do JSX, daí o !important. */
+  .layer-svg circle[stroke="currentColor"] {
+    opacity: 0.34 !important;
+  }
+
+  .layer-svg text {
+    opacity: 0.62;
+  }
+
+  .layer-svg text[font-size="11"] {
+    opacity: 0.95;
+  }
+}
+
+@media (max-width: 760px) {
+  .layer-visual {
+    top: 54px;
+  }
+
+  .layer-svg {
+    width: min(100%, 320px);
+  }
+}
+
+/* Telas baixas: encolhe o diagrama para sobrar lista visível — mas não abaixo
+   de 280px, senão as faixas de toque dos anéis ficam finas demais. */
+@media (max-width: 1024px) and (max-height: 700px) {
+  .layer-svg {
+    width: min(100%, 280px);
+  }
+}
+
+/* Mais baixo que isso o diagrama fixo tomaria a tela inteira e não sobraria
+   lista para rolar — aí o sticky deixa de fazer sentido. */
+@media (max-width: 1024px) and (max-height: 560px) {
+  .layer-visual {
+    position: static;
+    background: none;
+  }
+
+  .layer-svg {
+    width: min(100%, 300px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3c. Grafo de conhecimento no mobile
+   14 nós num palco de 334x350 ficavam apertados, e a dica "arraste os nodes"
+   caía por cima dos nós de baixo — além de ser um gesto de mouse.
+   -------------------------------------------------------------------------- */
+@media (max-width: 760px) {
+  .hero-obsidian-shell {
+    height: 520px;
+  }
+
+  .hero-obsidian-shell .obsidian-frame-body,
+  .hero-obsidian-shell .knowledge-graph {
+    height: 472px;
+  }
+
+  .graph-hint {
+    display: none;
+  }
+
+  .graph-node {
+    font-size: 8px;
+    padding: 4px 8px 4px 5px;
+  }
+
+  .graph-node.node-core {
+    font-size: 10px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3d. Copy do showcase
+   `.muted-title` só virava parágrafo de apoio a partir de 1025px; abaixo
+   disso a segunda frase saía com os mesmos 29px do título, formando um
+   paredão cinza de sete linhas.
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .showcase-copy h2 {
+    font-size: clamp(24px, 5.2vw, 32px);
+  }
+
+  .showcase-copy .muted-title {
+    display: block;
+    margin-top: 14px;
+    color: var(--muted);
+    font-family: Inter, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* --------------------------------------------------------------------------
    4b. Diagrama de camadas
    Mesmo problema do gráfico: viewBox de 660 unidades com largura fluida. O
    SVG só encolhe abaixo de ~726px de viewport (antes disso ele bate no
@@ -6226,5 +6406,290 @@ main {
   .hero-copy {
     padding-top: 46px;
     padding-bottom: 30px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile UX pass — visualizações e alvos de toque
+   -------------------------------------------------------------------------- */
+.chart-mobile {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  /* O gráfico desktop tinha 1240 unidades e era apenas reduzido para ~350px.
+     A versão móvel usa um canvas mais alto e rótulos posicionados para a
+     largura real do aparelho, sem colisões. */
+  .compounding-chart .chart-desktop {
+    display: none;
+  }
+
+  .compounding-chart .chart-mobile {
+    display: block;
+  }
+
+  .compounding-chart {
+    border-radius: 14px;
+  }
+
+  .chart-mobile-heading,
+  .chart-mobile-kicker,
+  .chart-mobile-handoff,
+  .chart-mobile-label text,
+  .chart-mobile-tick,
+  .chart-mobile-axis-label {
+    font-family: var(--font-mono);
+  }
+
+  .chart-mobile-heading {
+    fill: #2e332f;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.15px;
+  }
+
+  .chart-mobile-kicker {
+    fill: #858b87;
+    font-size: 8px;
+    letter-spacing: 0.8px;
+  }
+
+  .chart-mobile-handoff {
+    fill: var(--green-deep);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.45px;
+  }
+
+  .chart-mobile-label rect {
+    stroke-width: 1;
+  }
+
+  .chart-mobile-label text {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.55px;
+  }
+
+  .chart-mobile-label-growth rect {
+    fill: #ecfbf3;
+    stroke: rgba(7, 143, 81, 0.28);
+  }
+
+  .chart-mobile-label-growth text {
+    fill: var(--green-deep);
+  }
+
+  .chart-mobile-label-flat rect {
+    fill: #fff;
+    stroke: #d7dcda;
+  }
+
+  .chart-mobile-label-flat text {
+    fill: #737a76;
+  }
+
+  .chart-mobile .chart-marker {
+    r: 7px;
+  }
+
+  .chart-mobile .chart-marker-core {
+    r: 2.5px;
+  }
+
+  .chart-mobile-tick {
+    fill: #343936;
+    font-size: 9px;
+  }
+
+  .chart-mobile-axis-label {
+    fill: #808783;
+    font-size: 8px;
+    letter-spacing: 0.65px;
+  }
+
+  .compounding-chart figcaption {
+    padding: 18px 20px 20px;
+    font-size: 14px;
+  }
+
+  /* Navegação e CTAs: 44px é o mínimo confortável para toque. */
+  .brand-link,
+  .menu-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .brand-link {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .menu-button {
+    justify-content: center;
+  }
+
+  .button,
+  .showcase-nav button {
+    min-height: 46px;
+  }
+
+  .showcase-nav {
+    gap: 7px;
+    padding-bottom: 18px;
+    scroll-padding-inline: 18px;
+    scroll-snap-type: x proximity;
+  }
+
+  .showcase-nav button {
+    scroll-snap-align: start;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  /* Primeiro painel visual: controles legíveis e áreas de toque maiores. */
+  .hero-obsidian-shell .graph-toolbar {
+    height: 48px;
+    flex-basis: 48px;
+    padding: 0 9px;
+  }
+
+  .hero-obsidian-shell .graph-toolbar button {
+    min-height: 38px;
+    gap: 5px;
+    padding: 0 10px;
+    font-size: 9px;
+  }
+
+  .hero-obsidian-shell .graph-toolbar button svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .hero-obsidian-shell .graph-toolbar-label {
+    display: none;
+  }
+
+  .hero-obsidian-shell .graph-toolbar > span {
+    font-size: 8px;
+  }
+
+  .hero-obsidian-shell .graph-node {
+    min-height: 24px;
+    padding: 5px 8px 5px 5px;
+    font-size: 8.5px;
+  }
+
+  .hero-obsidian-shell .graph-node::after {
+    position: absolute;
+    inset: -9px -7px;
+    content: "";
+  }
+
+  .hero-obsidian-shell .graph-node.node-core {
+    min-height: 34px;
+    padding: 7px 11px 7px 7px;
+    font-size: 11px;
+  }
+
+  .hero-obsidian-shell .graph-region {
+    font-size: 8px;
+  }
+
+  /* O diagrama sticky não deve ocupar quase metade da tela. */
+  .layer-visual {
+    padding-top: 8px;
+    padding-bottom: 10px;
+  }
+
+  .layer-svg {
+    width: min(100%, 292px);
+  }
+
+  /* A anatomia do cérebro ainda carregava labels de 6–8px do desktop. */
+  .hard-chip {
+    min-height: 30px;
+    padding: 0 10px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .orbit-tool {
+    min-height: 34px;
+    padding: 0 9px;
+    font-size: 9.5px;
+    letter-spacing: 0.035em;
+  }
+
+  .brain-context-bar span {
+    font-size: 10px;
+    line-height: 1.55;
+  }
+
+  /* Cards do método: a hierarquia continua clara sem 100px de vazio. */
+  .method-grid {
+    margin-top: 44px;
+  }
+
+  .method-grid li,
+  .method-grid li:nth-child(2) {
+    min-height: 230px;
+    padding: 24px 28px;
+  }
+
+  .method-weeks {
+    margin-top: 34px;
+  }
+
+  .done-chip {
+    min-height: 34px;
+    font-size: 8px;
+  }
+
+  .delivery-strip > div,
+  .delivery-strip > div:nth-child(2) {
+    min-height: 58px;
+  }
+
+  .footer-contact {
+    min-height: 44px;
+    align-items: center;
+  }
+}
+
+@media (max-width: 390px) {
+  .hero-obsidian-shell .graph-toolbar > span {
+    display: none;
+  }
+
+  .hero-obsidian-shell .graph-toolbar > div {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .hero-obsidian-shell .graph-toolbar button {
+    width: calc(50% - 3px);
+    justify-content: center;
+  }
+
+  .layer-svg {
+    width: min(100%, 280px);
+  }
+}
+
+@media (max-width: 340px) {
+  .chart-mobile-heading {
+    font-size: 13px;
+  }
+
+  .chart-mobile-kicker,
+  .chart-mobile-handoff,
+  .chart-mobile-axis-label {
+    font-size: 9px;
+  }
+
+  .chart-mobile-label text,
+  .chart-mobile-tick {
+    font-size: 10px;
   }
 }
