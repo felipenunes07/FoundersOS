@@ -6409,110 +6409,7 @@ main {
   }
 }
 
-/* --------------------------------------------------------------------------
-   Mobile UX pass — visualizações e alvos de toque
-   -------------------------------------------------------------------------- */
-.chart-mobile {
-  display: none;
-}
-
 @media (max-width: 760px) {
-  /* O gráfico desktop tinha 1240 unidades e era apenas reduzido para ~350px.
-     A versão móvel usa um canvas mais alto e rótulos posicionados para a
-     largura real do aparelho, sem colisões. */
-  .compounding-chart .chart-desktop {
-    display: none;
-  }
-
-  .compounding-chart .chart-mobile {
-    display: block;
-  }
-
-  .compounding-chart {
-    border-radius: 14px;
-  }
-
-  .chart-mobile-heading,
-  .chart-mobile-kicker,
-  .chart-mobile-handoff,
-  .chart-mobile-label text,
-  .chart-mobile-tick,
-  .chart-mobile-axis-label {
-    font-family: var(--font-mono);
-  }
-
-  .chart-mobile-heading {
-    fill: #2e332f;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.15px;
-  }
-
-  .chart-mobile-kicker {
-    fill: #858b87;
-    font-size: 8px;
-    letter-spacing: 0.8px;
-  }
-
-  .chart-mobile-handoff {
-    fill: var(--green-deep);
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 0.45px;
-  }
-
-  .chart-mobile-label rect {
-    stroke-width: 1;
-  }
-
-  .chart-mobile-label text {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.55px;
-  }
-
-  .chart-mobile-label-growth rect {
-    fill: #ecfbf3;
-    stroke: rgba(7, 143, 81, 0.28);
-  }
-
-  .chart-mobile-label-growth text {
-    fill: var(--green-deep);
-  }
-
-  .chart-mobile-label-flat rect {
-    fill: #fff;
-    stroke: #d7dcda;
-  }
-
-  .chart-mobile-label-flat text {
-    fill: #737a76;
-  }
-
-  .chart-mobile .chart-marker {
-    r: 7px;
-  }
-
-  .chart-mobile .chart-marker-core {
-    r: 2.5px;
-  }
-
-  .chart-mobile-tick {
-    fill: #343936;
-    font-size: 9px;
-  }
-
-  .chart-mobile-axis-label {
-    fill: #808783;
-    font-size: 8px;
-    letter-spacing: 0.65px;
-  }
-
-  .compounding-chart figcaption {
-    padding: 18px 20px 20px;
-    font-size: 14px;
-  }
-
   /* Navegação e CTAs: 44px é o mínimo confortável para toque. */
   .brand-link,
   .menu-button {
@@ -6674,22 +6571,5 @@ main {
 
   .layer-svg {
     width: min(100%, 280px);
-  }
-}
-
-@media (max-width: 340px) {
-  .chart-mobile-heading {
-    font-size: 13px;
-  }
-
-  .chart-mobile-kicker,
-  .chart-mobile-handoff,
-  .chart-mobile-axis-label {
-    font-size: 9px;
-  }
-
-  .chart-mobile-label text,
-  .chart-mobile-tick {
-    font-size: 10px;
   }
 }
