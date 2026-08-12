@@ -296,9 +296,9 @@ export function OrbitalMap({ activeLayer, onLayerChange }) {
         >
           <span>
             <i />
-            FoundersOS
+            Sistema
           </span>
-          <strong>CLAUDE.md</strong>
+          <strong>FoundersOS</strong>
           <small>núcleo de contexto</small>
         </button>
       </div>
