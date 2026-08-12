@@ -628,7 +628,7 @@ export function FinalCta() {
 }
 
 const CALENDAR_NAMESPACE = "foundersos";
-const CALENDAR_LINK = "victor-playbooklab/site";
+const CALENDAR_LINK = "victor-playbooklab/bate-papo-foundersos";
 
 function loadCalEmbed() {
   if (window.Cal) return;
