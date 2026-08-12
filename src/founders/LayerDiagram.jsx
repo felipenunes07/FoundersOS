@@ -251,27 +251,15 @@ export function LayerDiagram({ active, onChange }) {
         />
         <text
           x={CENTER}
-          y={CENTER - 5}
+          y={CENTER + 4}
           textAnchor="middle"
           fill={active === 1 ? "var(--green)" : "currentColor"}
           opacity={active === 1 ? 1 : 0.72}
           fontFamily="var(--font-mono)"
           fontSize="11"
-          letterSpacing="1.4"
+          letterSpacing="0.6"
         >
-          CLAUDE
-        </text>
-        <text
-          x={CENTER}
-          y={CENTER + 13}
-          textAnchor="middle"
-          fill={active === 1 ? "var(--green)" : "currentColor"}
-          opacity={active === 1 ? 1 : 0.72}
-          fontFamily="var(--font-mono)"
-          fontSize="11"
-          letterSpacing="1.4"
-        >
-          .md
+          FOUNDERSOS
         </text>
       </motion.g>
 

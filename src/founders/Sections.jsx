@@ -17,7 +17,7 @@ import {
   Sparkles,
   Unplug,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CompoundingChart } from "./CompoundingChart";
 import { LayerDiagram } from "./LayerDiagram";
 import { ObsidianVaultDemo } from "./ObsidianWorkspace";
@@ -57,7 +57,7 @@ function SectionLead({ eyebrow, title, copy, centered = false, invert = false })
   );
 }
 
-export function Hero({ onOpen }) {
+export function Hero() {
   const sectionRef = useRef(null);
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
@@ -116,9 +116,9 @@ export function Hero({ onOpen }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <button className="button button-outline" onClick={onOpen}>
+          <a className="button button-outline" href="#agendar">
             Agendar uma conversa
-          </button>
+          </a>
           <a className="button button-dark" href="#sistema">
             Ver como funciona <ArrowRight size={15} />
           </a>
@@ -295,7 +295,7 @@ export function BrainAnatomy() {
 const LAYERS = [
   {
     number: 1,
-    title: "CLAUDE.md",
+    title: "Contexto",
     tag: "DNA",
     copy: "Empresa, fundador, ICP, oferta, preços, prioridades, regras e tom de voz.",
   },
@@ -578,7 +578,7 @@ export function LocalOwnership() {
   );
 }
 
-export function FinalCta({ onOpen }) {
+export function FinalCta() {
   return (
     <section className="final-cta-section paper-surface" id="investimento">
       <div className="page-container">
@@ -613,15 +613,124 @@ export function FinalCta({ onOpen }) {
             </span>
             <h2>Pare de explicar sua empresa toda vez que abrir o chat.</h2>
             <p>
-              Três perguntas rápidas. Depois, você fala direto com a equipe da
+              Escolha um horário disponível e fale direto com a equipe da
               Playbook Lab.
             </p>
-            <button className="button button-dark button-large" onClick={onOpen}>
+            <a className="button button-dark button-large" href="#agendar">
               Agendar uma conversa <ArrowRight size={16} />
-            </button>
-            <small>Sem funil. Sem formulário interminável.</small>
+            </a>
+            <small>Sem formulário longo. Agendamento direto.</small>
           </motion.div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+const CALENDAR_NAMESPACE = "foundersos";
+const CALENDAR_LINK = "victor-playbooklab/site";
+
+function loadCalEmbed() {
+  if (window.Cal) return;
+
+  ((windowRef, embedUrl, initCommand) => {
+    const enqueue = (target, args) => target.q.push(args);
+    const documentRef = windowRef.document;
+
+    windowRef.Cal = windowRef.Cal || function calQueue() {
+      const cal = windowRef.Cal;
+      const args = arguments;
+
+      if (!cal.loaded) {
+        cal.ns = {};
+        cal.q = cal.q || [];
+        const script = documentRef.createElement("script");
+        script.src = embedUrl;
+        script.async = true;
+        documentRef.head.appendChild(script);
+        cal.loaded = true;
+      }
+
+      if (args[0] === initCommand) {
+        const namespace = args[1];
+        const api = function calNamespaceQueue() {
+          enqueue(api, arguments);
+        };
+        api.q = api.q || [];
+        if (typeof namespace === "string") {
+          cal.ns[namespace] = cal.ns[namespace] || api;
+          enqueue(cal.ns[namespace], args);
+          enqueue(cal, ["initNamespace", namespace]);
+        } else {
+          enqueue(cal, args);
+        }
+        return;
+      }
+
+      enqueue(cal, args);
+    };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+}
+
+export function ScheduleSection() {
+  const calendarRef = useRef(null);
+
+  useEffect(() => {
+    const element = calendarRef.current;
+    if (!element || element.dataset.calInitialized === "true") return;
+
+    element.dataset.calInitialized = "true";
+    loadCalEmbed();
+    window.Cal("init", CALENDAR_NAMESPACE, {
+      origin: "https://app.cal.com",
+    });
+    window.Cal.ns[CALENDAR_NAMESPACE]("inline", {
+      elementOrSelector: "#foundersos-calendar",
+      config: { layout: "month_view", theme: "light" },
+      calLink: CALENDAR_LINK,
+    });
+    window.Cal.ns[CALENDAR_NAMESPACE]("ui", {
+      theme: "light",
+      cssVarsPerTheme: {
+        light: { "cal-brand": "#0aa866" },
+      },
+      hideEventTypeDetails: false,
+      layout: "month_view",
+    });
+  }, []);
+
+  return (
+    <section className="schedule-section paper-surface" id="agendar">
+      <div className="schedule-glow" aria-hidden="true" />
+      <div className="page-container schedule-container">
+        <motion.div className="schedule-heading" {...reveal}>
+          <p className="eyebrow">Agenda aberta</p>
+          <h2>Agende uma conversa</h2>
+          <p>Escolha um horário para falar com nossa equipe.</p>
+        </motion.div>
+
+        <motion.div
+          className="calendar-shell"
+          {...reveal}
+          transition={{ ...reveal.transition, delay: 0.08 }}
+        >
+          <div
+            id="foundersos-calendar"
+            ref={calendarRef}
+            className="calendar-embed"
+            aria-label="Calendário para agendar uma conversa com a Playbook Lab"
+          />
+          <noscript>
+            <a
+              className="calendar-fallback"
+              href={`https://cal.com/${CALENDAR_LINK}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Abrir calendário de agendamento
+            </a>
+          </noscript>
+        </motion.div>
       </div>
     </section>
   );
