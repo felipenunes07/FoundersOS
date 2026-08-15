@@ -589,7 +589,10 @@ export function FinalCta() {
               <span>R$</span>
               <strong>6.000</strong>
             </div>
-            <p className="price-note">em 2x · sem mensalidade</p>
+            <p className="price-note">à vista · sem mensalidade</p>
+            <p className="price-installment">
+              ou <strong>12x de R$ 619,70</strong>
+            </p>
             <ul>
               <li>
                 <Check size={14} /> 4 semanas de implantação

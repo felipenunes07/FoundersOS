@@ -3954,6 +3954,18 @@ main {
   font-size: 12px;
 }
 
+.price-installment {
+  margin-top: 7px;
+  color: #555953;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.price-installment strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
 .price-column ul {
   display: flex;
   flex-direction: column;
@@ -4431,6 +4443,7 @@ main {
 }
 
 .theme-dark .price-note,
+.theme-dark .price-installment,
 .theme-dark .price-column li,
 .theme-dark .cta-column > p {
   color: #929b96;
