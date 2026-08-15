@@ -125,6 +125,18 @@ function Footer() {
         </a>
       </div>
 
+      <nav className="footer-guides" aria-label="Guias">
+        <span>Guias</span>
+        <a href="/guias/segundo-cerebro-para-empresas/">
+          Segundo cérebro para empresas
+        </a>
+        <a href="/guias/ia-que-conhece-seu-negocio/">
+          IA que conhece seu negócio
+        </a>
+        <a href="/guias/obsidian-para-founders/">Obsidian para fundadores</a>
+        <a href="/guias/">Ver todos</a>
+      </nav>
+
       <div className="footer-bottom">
         <span>© 2026 FoundersOS</span>
         <span>Um produto Playbook Lab</span>
