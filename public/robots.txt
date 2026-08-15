@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://foundersos.com.br/sitemap.xml
+Sitemap: https://www.foundersos.com.br/sitemap.xml
