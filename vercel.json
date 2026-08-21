@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/guias/obsidian-para-founders",
+      "destination": "/guias/onde-guardar-a-memoria-da-empresa/",
+      "permanent": true
+    },
+    {
+      "source": "/guias/obsidian-para-founders/",
+      "destination": "/guias/onde-guardar-a-memoria-da-empresa/",
+      "permanent": true
+    }
+  ]
+}

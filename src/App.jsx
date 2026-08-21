@@ -127,13 +127,16 @@ function Footer() {
 
       <nav className="footer-guides" aria-label="Guias">
         <span>Guias</span>
+        <a href="/guias/empresa-nao-roda-sem-mim/">A empresa não roda sem você</a>
         <a href="/guias/segundo-cerebro-para-empresas/">
           Segundo cérebro para empresas
         </a>
         <a href="/guias/ia-que-conhece-seu-negocio/">
           IA que conhece seu negócio
         </a>
-        <a href="/guias/obsidian-para-founders/">Obsidian para fundadores</a>
+        <a href="/guias/onde-guardar-a-memoria-da-empresa/">
+          Onde guardar a memória da empresa
+        </a>
         <a href="/guias/">Ver todos</a>
       </nav>
 

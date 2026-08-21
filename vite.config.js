@@ -23,7 +23,10 @@ export default defineConfig({
           "guias/segundo-cerebro-para-empresas/index.html",
         ),
         "guia-ia-contexto": entry("guias/ia-que-conhece-seu-negocio/index.html"),
-        "guia-obsidian": entry("guias/obsidian-para-founders/index.html"),
+        "guia-memoria": entry(
+          "guias/onde-guardar-a-memoria-da-empresa/index.html",
+        ),
+        "guia-gargalo": entry("guias/empresa-nao-roda-sem-mim/index.html"),
       },
       output: {
         manualChunks(id) {
