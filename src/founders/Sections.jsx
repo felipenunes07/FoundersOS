@@ -700,6 +700,21 @@ export function ScheduleSection() {
       hideEventTypeDetails: false,
       layout: "month_view",
     });
+
+    // Dispara a conversão do Pixel da OpenAI (GPT Ads) quando o agendamento
+    // é concluído com sucesso no Cal.com.
+    window.Cal.ns[CALENDAR_NAMESPACE]("on", {
+      action: "bookingSuccessful",
+      callback: () => {
+        if (typeof window.oaiq === "function") {
+          window.oaiq("measure", "registration_completed", {
+            type: "customer_action",
+            amount: 0,
+            currency: "USD",
+          });
+        }
+      },
+    });
   }, []);
 
   return (

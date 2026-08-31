@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#ffffff" />
 
+    <!-- OpenAI Ads Pixel (GPT Ads) -->
+    <script>
+      !(function (w, d, s, u) {
+        if (w.oaiq) return;
+        var q = function () {
+          q.q.push(arguments);
+        };
+        q.q = [];
+        w.oaiq = q;
+        var j = d.createElement(s);
+        j.async = 1;
+        j.src = u;
+        var f = d.getElementsByTagName(s)[0];
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "https://bzrcdn.openai.com/sdk/oaiq.min.js");
+      oaiq("init", { pixelId: "FUUSsdKJHzfYhgKq5RtDRL", debug: true });
+      oaiq("measure", "page_viewed", { type: "contents" });
+    </script>
+
     <title>Onde a memória da sua empresa deveria morar | FoundersOS</title>
     <meta
       name="description"
