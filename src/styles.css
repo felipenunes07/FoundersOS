@@ -4025,6 +4025,37 @@ main {
   text-transform: uppercase;
 }
 
+/* Próxima turma — bloco de status dentro do CTA final */
+.cohort-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 30px;
+  margin-top: 26px;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  background: var(--paper-deep);
+}
+
+.cohort-meta > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cohort-meta span {
+  color: #90948e;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cohort-meta strong {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+}
+
 /* Footer */
 .site-footer {
   padding: 72px var(--gutter) 30px;
@@ -4477,6 +4508,15 @@ main {
 .theme-dark .price-column li,
 .theme-dark .cta-column > p {
   color: #929b96;
+}
+
+.theme-dark .cohort-meta {
+  border-color: #343b37;
+  background: #111512;
+}
+
+.theme-dark .cohort-meta strong {
+  color: #f1f4f2;
 }
 
 .theme-dark .cta-column .button-dark {

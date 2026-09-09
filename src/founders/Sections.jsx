@@ -18,6 +18,7 @@ import {
   Unplug,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { cohort } from "./cohort";
 import { CompoundingChart } from "./CompoundingChart";
 import { LayerDiagram } from "./LayerDiagram";
 import { ObsidianVaultDemo } from "./ObsidianWorkspace";
@@ -83,13 +84,13 @@ export function Hero() {
     >
       <div className="hero-copy">
         <motion.a
-          href="#cerebro"
+          href="#metodo"
           className="hero-pill"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.5 }}
         >
-          O segundo cérebro do fundador <ChevronRight size={13} />
+          {cohort.pillLabel} <ChevronRight size={13} />
         </motion.a>
 
         <motion.h1
@@ -97,8 +98,8 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.22, duration: 0.65 }}
         >
-          Pare de explicar seu negócio para a IA.
-          <span>O FoundersOS já sabe.</span>
+          Construa seu segundo cérebro com IA
+          <span>em 4 semanas.</span>
         </motion.h1>
 
         <motion.p
@@ -106,8 +107,9 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.32, duration: 0.55 }}
         >
-          Um sistema operacional de IA que vê, escuta, lê e age em todas as
-          frentes que você toca.
+          Um programa guiado, em turma, para founders e executivos que querem
+          transformar o Claude em uma camada de contexto, memória e execução do
+          próprio trabalho.
         </motion.p>
 
         <motion.div
@@ -116,11 +118,16 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <a className="button button-outline" href="#agendar">
-            Agendar uma conversa
+          <a className="button button-outline" href="#sistema">
+            Ver como funciona
           </a>
-          <a className="button button-dark" href="#sistema">
-            Ver como funciona <ArrowRight size={15} />
+          <a
+            className="button button-dark"
+            href={cohort.ctaHref}
+            target={cohort.ctaTarget}
+            rel={cohort.ctaRel}
+          >
+            {cohort.ctaPrimary} <ArrowRight size={15} />
           </a>
         </motion.div>
       </div>
@@ -372,7 +379,7 @@ export function LayerSection() {
           {[
             ["1 núcleo", "uma identidade consistente"],
             ["Memória local", "contexto que fica com você"],
-            ["5 skills", "construídas para sua rotina"],
+            ["5 skills", "que você constrói na turma"],
             ["Rotinas ativas", "o sistema trabalhando sozinho"],
           ].map(([value, label]) => (
             <div key={value}>
@@ -414,8 +421,8 @@ export function CompoundingSection() {
         <div className="reason-rail">
           {[
             ["Contexto acumulado", "O ativo cresce todos os dias."],
-            ["Método fechado", "4 semanas com Definition of Done."],
-            ["Packs prontos", "Skills testadas e adaptadas."],
+            ["Programa guiado", "4 semanas com Definition of Done."],
+            ["Packs prontos", "Skills testadas que você adapta."],
           ].map(([title, copy], index) => (
             <motion.div
               key={title}
@@ -437,30 +444,30 @@ const PHASES = [
   {
     step: "01",
     weeks: "Semana 1",
-    title: "Diagnóstico + base",
-    copy: "Mapeamento, estrutura do cérebro e conectores lendo dados reais.",
+    title: "Fundação + contexto",
+    copy: "Você mapeia o seu negócio e monta a arquitetura inicial do cérebro, com os primeiros conectores lendo dados reais.",
     done: "Cérebro no ar",
   },
   {
     step: "02",
     weeks: "Semana 2",
-    title: "Skills sob medida",
-    copy: "Cinco skills construídas e validadas nos cenários do fundador.",
-    done: "5 skills rodando",
+    title: "Memória + organização",
+    copy: "Como organizar a memória do negócio e usar o sistema no dia a dia — sem precisar virar especialista técnico.",
+    done: "Memória organizada",
   },
   {
     step: "03",
     weeks: "Semana 3",
-    title: "Packs + rotinas",
-    copy: "Packs Playbook Lab adaptados e rotinas automáticas agendadas.",
-    done: "Sistema em ação",
+    title: "Skills + rotinas",
+    copy: "Você constrói cinco skills a partir dos packs Playbook Lab e agenda as rotinas que rodam sozinhas.",
+    done: "Skills e rotinas rodando",
   },
   {
     step: "04",
     weeks: "Semana 4",
-    title: "Treino + autonomia",
-    copy: "Documentação, vídeos, treinamento e plano de continuidade.",
-    done: "Operação entregue",
+    title: "Conexões + operação",
+    copy: "Conectores, refinamento e consolidação: documentação, treino e plano de continuidade para o sistema seguir rodando.",
+    done: "Sistema em operação",
   },
 ];
 
@@ -469,16 +476,16 @@ export function MethodSection() {
     <section className="method-section grid-surface" id="metodo">
       <div className="page-container">
         <SectionLead
-          eyebrow="O método"
+          eyebrow="O programa"
           title={
             <>
-              Um mês. Quatro reuniões.{" "}
+              Quatro semanas. Quatro encontros.{" "}
               <span className="muted-title">
-                Cada fase termina com algo funcionando.
+                Cada semana termina com algo funcionando.
               </span>
             </>
           }
-          copy="Produto produtizado, não projeto aberto. Escopo e definição de pronto visíveis desde o primeiro dia."
+          copy="A turma inteira avança no mesmo ciclo, com encontros ao vivo e uma metodologia guiada — não é curso gravado nem consultoria feita por nós no seu lugar. Escopo e definição de pronto visíveis desde o primeiro dia."
         />
 
         <ol className="method-grid">
@@ -529,7 +536,7 @@ const OWNERSHIP = [
   {
     icon: HardDrive,
     title: "Autonomia",
-    copy: "Quando o projeto acaba, o FoundersOS continua rodando.",
+    copy: "Quando o programa acaba, o FoundersOS continua rodando.",
   },
   {
     icon: Lock,
@@ -595,10 +602,10 @@ export function FinalCta() {
             </p>
             <ul>
               <li>
-                <Check size={14} /> 4 semanas de implantação
+                <Check size={14} /> Programa guiado de 4 semanas
               </li>
               <li>
-                <Check size={14} /> 4 reuniões de acompanhamento
+                <Check size={14} /> 4 encontros ao vivo com a turma
               </li>
               <li>
                 <Check size={14} /> Sistema e documentação ficam com você
@@ -612,17 +619,35 @@ export function FinalCta() {
             transition={{ ...reveal.transition, delay: 0.08 }}
           >
             <span className="live-chip">
-              <i /> Agenda aberta
+              <i /> {cohort.seats}
             </span>
             <h2>Pare de explicar sua empresa toda vez que abrir o chat.</h2>
-            <p>
-              Escolha um horário disponível e fale direto com a equipe da
-              Playbook Lab.
-            </p>
-            <a className="button button-dark button-large" href="#agendar">
-              Agendar uma conversa <ArrowRight size={16} />
+            <p>{cohort.ctaLead}</p>
+
+            <div className="cohort-meta">
+              <div>
+                <span>Próxima turma</span>
+                <strong>{cohort.nextLabel}</strong>
+              </div>
+              <div>
+                <span>Formato</span>
+                <strong>{cohort.format}</strong>
+              </div>
+              <div>
+                <span>Vagas</span>
+                <strong>{cohort.seats}</strong>
+              </div>
+            </div>
+
+            <a
+              className="button button-dark button-large"
+              href={cohort.ctaHref}
+              target={cohort.ctaTarget}
+              rel={cohort.ctaRel}
+            >
+              {cohort.ctaPrimary} <ArrowRight size={16} />
             </a>
-            <small>Sem formulário longo. Agendamento direto.</small>
+            <small>{cohort.ctaNote}</small>
           </motion.div>
         </div>
       </div>
@@ -724,7 +749,11 @@ export function ScheduleSection() {
         <motion.div className="schedule-heading" {...reveal}>
           <p className="eyebrow">Agenda aberta</p>
           <h2>Agende uma conversa</h2>
-          <p>Escolha um horário para falar com nossa equipe.</p>
+          <p>
+            Quer entender se a turma faz sentido para o seu momento — ou precisa
+            de uma implementação individual para a sua empresa? Escolha um
+            horário para falar com nossa equipe.
+          </p>
         </motion.div>
 
         <motion.div

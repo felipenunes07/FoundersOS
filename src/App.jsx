@@ -7,6 +7,7 @@ import {
   X,
 } from "lucide-react";
 import { BrandMark } from "./founders/BrandMark";
+import { cohort } from "./founders/cohort";
 import {
   BrainAnatomy,
   CompoundingSection,
@@ -42,9 +43,9 @@ function Header() {
     <>
       <div className="announcement">
         <span className="announcement-dot" />
-        <span>FoundersOS · o segundo cérebro do fundador</span>
-        <a href="#sistema">
-          Conheça o sistema <ArrowRight size={13} />
+        <span>FoundersOS · {cohort.announcement}</span>
+        <a href="#metodo">
+          Ver o programa <ArrowRight size={13} />
         </a>
       </div>
 
@@ -64,8 +65,13 @@ function Header() {
 
           <div className="header-actions">
             <span className="playbook-signature">por Playbook Lab</span>
-            <a className="button button-dark button-small" href="#agendar">
-              Agendar conversa
+            <a
+              className="button button-dark button-small"
+              href={cohort.ctaHref}
+              target={cohort.ctaTarget}
+              rel={cohort.ctaRel}
+            >
+              {cohort.ctaShort}
             </a>
             <button
               className="menu-button"
@@ -97,12 +103,14 @@ function Header() {
             ))}
             <a
               className="button button-dark"
-              href="#agendar"
+              href={cohort.ctaHref}
+              target={cohort.ctaTarget}
+              rel={cohort.ctaRel}
               onClick={() => {
                 setMobileOpen(false);
               }}
             >
-              Agendar conversa
+              {cohort.ctaShort}
             </a>
           </motion.nav>
         )}
@@ -117,8 +125,9 @@ function Footer() {
       <div className="footer-top">
         <BrandMark light />
         <p>
-          Um sistema operacional de IA que aprende o contexto do fundador e
-          trabalha dentro das ferramentas que ele já usa.
+          Um programa guiado, em turma, para construir o segundo cérebro que
+          aprende o contexto do fundador e trabalha dentro das ferramentas que
+          ele já usa.
         </p>
         <a className="footer-contact" href="#agendar">
           Agendar uma conversa <ArrowRight size={15} />
