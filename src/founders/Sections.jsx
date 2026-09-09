@@ -594,11 +594,11 @@ export function FinalCta() {
             <p className="eyebrow">Piloto de lançamento</p>
             <div className="price">
               <span>R$</span>
-              <strong>6.000</strong>
+              <strong>3.000</strong>
             </div>
             <p className="price-note">à vista · sem mensalidade</p>
             <p className="price-installment">
-              ou <strong>12x de R$ 619,70</strong>
+              ou <strong>12x de R$ 309,85</strong>
             </p>
             <ul>
               <li>
