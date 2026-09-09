@@ -28,7 +28,7 @@ export const COHORT_STATUS = "open";
  */
 export const COHORT = {
   name: "Turma de Setembro",
-  startDate: "14 de setembro",
+  startDate: "",
   format: "Programa guiado de 4 semanas",
   seatCount: 5,
 };
