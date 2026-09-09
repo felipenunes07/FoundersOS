@@ -98,8 +98,8 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.22, duration: 0.65 }}
         >
-          Construa seu segundo cérebro com IA
-          <span>em 4 semanas.</span>
+          Pare de explicar seu negócio para a IA.
+          <span>O FoundersOS já sabe.</span>
         </motion.h1>
 
         <motion.p
@@ -107,9 +107,9 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.32, duration: 0.55 }}
         >
-          Um programa guiado, em turma, para founders e executivos que querem
-          transformar o Claude em uma camada de contexto, memória e execução do
-          próprio trabalho.
+          Um sistema operacional de IA que vê, escuta, lê e age em todas as
+          frentes que você toca. Você constrói o seu em quatro semanas, junto
+          com a turma.
         </motion.p>
 
         <motion.div
@@ -627,7 +627,7 @@ export function FinalCta() {
             <div className="cohort-meta">
               <div>
                 <span>Próxima turma</span>
-                <strong>{cohort.nextLabel}</strong>
+                <strong>{cohort.dateLabel}</strong>
               </div>
               <div>
                 <span>Formato</span>
@@ -749,11 +749,7 @@ export function ScheduleSection() {
         <motion.div className="schedule-heading" {...reveal}>
           <p className="eyebrow">Agenda aberta</p>
           <h2>Agende uma conversa</h2>
-          <p>
-            Quer entender se a turma faz sentido para o seu momento — ou precisa
-            de uma implementação individual para a sua empresa? Escolha um
-            horário para falar com nossa equipe.
-          </p>
+          <p>Escolha um horário para falar com nossa equipe.</p>
         </motion.div>
 
         <motion.div

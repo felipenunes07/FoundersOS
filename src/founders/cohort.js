@@ -21,13 +21,16 @@ export const COHORT_STATUS = "open";
  * Dados da próxima turma.
  *
  * `startDate` é opcional: quando vazio, a página mostra apenas o nome da
- * turma (ex.: "Turma de Setembro"). Preencha com a data confirmada — por
- * exemplo "22 de setembro" — para que ela apareça ao lado do nome.
+ * turma (ex.: "Turma de Setembro"). Com a data preenchida, ela aparece no
+ * selo do hero e no bloco "Próxima turma".
+ *
+ * `seatCount` é o número de vagas da turma, usado na nota abaixo do CTA.
  */
 export const COHORT = {
   name: "Turma de Setembro",
-  startDate: "",
+  startDate: "14 de setembro",
   format: "Programa guiado de 4 semanas",
+  seatCount: 5,
 };
 
 /**
@@ -51,17 +54,17 @@ const COPY = {
   open: {
     seats: "Vagas abertas",
     announcement: `${COHORT.name} · vagas abertas`,
-    pill: "Programa guiado em turma",
+    pill: "Programa em turma",
     ctaPrimary: "Quero participar da próxima turma",
     ctaShort: "Participar da turma",
     ctaLead:
       "Deixe seus dados e o nosso time confirma se a turma faz sentido para o seu momento.",
-    ctaNote: "Inscrição por formulário · vagas limitadas por turma",
+    ctaNote: `Inscrição por formulário · ${COHORT.seatCount} vagas por turma`,
   },
   waitlist: {
     seats: "Inscrições encerradas",
     announcement: "Turma em andamento · lista de espera aberta",
-    pill: "Programa guiado em turma",
+    pill: "Programa em turma",
     ctaPrimary: "Entrar na lista de espera",
     ctaShort: "Lista de espera",
     ctaLead:
@@ -79,14 +82,12 @@ export const cohort = {
   ...copy,
   status: COHORT_STATUS,
   isOpen: COHORT_STATUS === "open",
-  /** Rótulo da próxima turma, com a data quando ela estiver definida. */
-  nextLabel: COHORT.startDate
-    ? `${COHORT.name} · início ${COHORT.startDate}`
-    : COHORT.name,
-  /** Rótulo do selo do hero: some com o nome da turma quando ela já fechou. */
+  /** Data no bloco "Próxima turma": cai no nome da turma se não houver data. */
+  dateLabel: COHORT.startDate || COHORT.name,
+  /** Selo do hero: curto, some com a data quando a turma já fechou. */
   pillLabel:
     COHORT_STATUS === "open"
-      ? `${copy.pill} · ${COHORT.startDate ? `${COHORT.name} · início ${COHORT.startDate}` : COHORT.name}`
+      ? `${copy.pill}${COHORT.startDate ? ` · início ${COHORT.startDate}` : ` · ${COHORT.name}`}`
       : `${copy.pill} · próxima turma em breve`,
   ctaHref,
   /** Formulário externo abre em nova aba; a âncora interna, não. */
