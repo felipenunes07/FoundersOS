@@ -103,7 +103,7 @@ const NOTES = {
     type: "Fonte comercial",
     updated: "hoje · 09:06",
     body: "Programa guiado de quatro semanas para construir o segundo cérebro, com entregas verificáveis e propriedade integral do participante.",
-    bullets: ["4 semanas", "4 encontros", "zero lock-in"],
+    bullets: ["4 semanas", "8 encontros", "zero lock-in"],
     links: ["ICP", "Pipeline", "Follow-up"],
     tags: ["oferta", "comercial"],
   },
