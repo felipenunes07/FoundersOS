@@ -21,7 +21,7 @@ import { useEffect, useRef, useState } from "react";
 import { cohort } from "./cohort";
 import { CompoundingChart } from "./CompoundingChart";
 import { LayerDiagram } from "./LayerDiagram";
-import { ObsidianVaultDemo } from "./ObsidianWorkspace";
+import { VaultVideoDemo } from "./VaultVideo";
 import {
   BrainOrbit,
   SenseInterface,
@@ -138,10 +138,7 @@ export function Hero() {
           style={{ scale: visualScale, y: visualY }}
         >
           <div className="hero-visual-view">
-            <ObsidianVaultDemo
-              className="hero-obsidian-shell"
-              initialSelected="foundersos"
-            />
+            <VaultVideoDemo className="hero-video-shell" />
           </div>
         </motion.div>
       </div>
@@ -479,7 +476,7 @@ export function MethodSection() {
           eyebrow="O programa"
           title={
             <>
-              Quatro semanas. Quatro encontros.{" "}
+              Quatro semanas. Oito encontros.{" "}
               <span className="muted-title">
                 Cada semana termina com algo funcionando.
               </span>
@@ -605,7 +602,7 @@ export function FinalCta() {
                 <Check size={14} /> Programa guiado de 4 semanas
               </li>
               <li>
-                <Check size={14} /> 4 encontros ao vivo com a turma
+                <Check size={14} /> 8 encontros ao vivo com a turma
               </li>
               <li>
                 <Check size={14} /> Sistema e documentação ficam com você

@@ -720,7 +720,7 @@ main {
 
 .hero-product-plane {
   position: relative;
-  height: 930px;
+  padding: 48px 0 82px;
   background:
     linear-gradient(
       90deg,
@@ -759,18 +759,39 @@ main {
 }
 
 .hero-product-stage {
-  position: absolute;
-  top: 48px;
-  left: 50%;
+  position: relative;
   width: min(calc(100vw - 56px), 1740px);
-  height: 800px;
+  margin: 0 auto;
   transform-origin: 50% 0;
-  translate: -50% 0;
 }
 
 .hero-visual-view {
-  position: absolute;
-  inset: 0;
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   Janela do hero com a gravacao do sistema
+   A moldura continua a mesma; o corpo vira um retangulo com o aspecto exato
+   do arquivo (1716x976 depois do corte da barra do Chrome), para o video
+   nao ser esticado nem cortado no desktop.
+   -------------------------------------------------------------------------- */
+.hero-video-shell {
+  width: min(100%, 1288px);
+  margin: 0 auto;
+}
+
+.obsidian-frame-body.vault-video-body {
+  display: block;
+  height: auto;
+  aspect-ratio: 1716 / 976;
+  background: #05100b;
+}
+
+.vault-video-body .vault-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .hero-obsidian-shell {
@@ -4580,12 +4601,7 @@ main {
   }
 
   .hero-product-plane {
-    height: 640px;
-  }
-
-  .hero-product-stage {
-    top: 70px;
-    height: 550px;
+    padding: 70px 0 20px;
   }
 
   .operating-window {
@@ -4816,13 +4832,17 @@ main {
   }
 
   .hero-product-plane {
-    height: 520px;
+    padding: 52px 0 18px;
   }
 
   .hero-product-stage {
-    top: 52px;
     width: calc(100% - 24px);
-    height: 450px;
+  }
+
+  /* No celular a tela cheia da gravacao ficaria ilegivel: o corpo fica mais
+     alto e o video enquadra o centro, onde acontece a acao. */
+  .obsidian-frame-body.vault-video-body {
+    aspect-ratio: 5 / 4;
   }
 
   .operating-window {
