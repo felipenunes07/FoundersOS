@@ -37,8 +37,8 @@ export const COHORT = {
  * ⚠️ LINKS DOS FORMULÁRIOS — INSERIR AQUI O LINK DEFINITIVO.
  *
  * Enquanto estas constantes estiverem vazias, todos os CTAs continuam
- * apontando para a seção de agendamento (#agendar), que já existe e
- * funciona. Nenhum link fake é usado.
+ * apontando para o formulário de interesse (#turma), que já existe na própria
+ * página e funciona. Nenhum link fake é usado.
  *
  * Assim que o formulário existir, basta colar a URL abaixo:
  *   COHORT_FORM_URL   → formulário de inscrição (estado "open")
@@ -48,7 +48,7 @@ export const COHORT_FORM_URL = ""; // ex.: "https://tally.so/r/xxxxxx"
 export const WAITLIST_FORM_URL = ""; // ex.: "https://tally.so/r/yyyyyy"
 
 /** Destino usado quando ainda não há formulário configurado. */
-const FALLBACK_HREF = "#agendar";
+const FALLBACK_HREF = "#turma";
 
 const COPY = {
   open: {

@@ -17,8 +17,8 @@ import {
   LocalOwnership,
   MethodSection,
   ProductShowcase,
-  ScheduleSection,
 } from "./founders/Sections";
+import { InterestSection } from "./founders/InterestForm";
 
 const NAV_ITEMS = [
   ["Sistema", "#sistema"],
@@ -129,8 +129,8 @@ function Footer() {
           aprende o contexto do fundador e trabalha dentro das ferramentas que
           ele já usa.
         </p>
-        <a className="footer-contact" href="#agendar">
-          Agendar uma conversa <ArrowRight size={15} />
+        <a className="footer-contact" href="#turma">
+          Quero participar da próxima turma <ArrowRight size={15} />
         </a>
       </div>
 
@@ -179,7 +179,7 @@ export default function App() {
         <MethodSection />
         <LocalOwnership />
         <FinalCta />
-        <ScheduleSection />
+        <InterestSection />
       </main>
       <Footer />
     </div>

@@ -17,7 +17,7 @@ import {
   Sparkles,
   Unplug,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { cohort } from "./cohort";
 import { CompoundingChart } from "./CompoundingChart";
 import { LayerDiagram } from "./LayerDiagram";
@@ -605,6 +605,10 @@ export function FinalCta() {
                 <Check size={14} /> 8 encontros ao vivo com a turma
               </li>
               <li>
+                <Check size={14} /> Grupo de WhatsApp para suporte durante o
+                programa
+              </li>
+              <li>
                 <Check size={14} /> Sistema e documentação ficam com você
               </li>
             </ul>
@@ -647,130 +651,6 @@ export function FinalCta() {
             <small>{cohort.ctaNote}</small>
           </motion.div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-const CALENDAR_NAMESPACE = "foundersos";
-const CALENDAR_LINK = "victor-playbooklab/bate-papo-foundersos";
-
-function loadCalEmbed() {
-  if (window.Cal) return;
-
-  ((windowRef, embedUrl, initCommand) => {
-    const enqueue = (target, args) => target.q.push(args);
-    const documentRef = windowRef.document;
-
-    windowRef.Cal = windowRef.Cal || function calQueue() {
-      const cal = windowRef.Cal;
-      const args = arguments;
-
-      if (!cal.loaded) {
-        cal.ns = {};
-        cal.q = cal.q || [];
-        const script = documentRef.createElement("script");
-        script.src = embedUrl;
-        script.async = true;
-        documentRef.head.appendChild(script);
-        cal.loaded = true;
-      }
-
-      if (args[0] === initCommand) {
-        const namespace = args[1];
-        const api = function calNamespaceQueue() {
-          enqueue(api, arguments);
-        };
-        api.q = api.q || [];
-        if (typeof namespace === "string") {
-          cal.ns[namespace] = cal.ns[namespace] || api;
-          enqueue(cal.ns[namespace], args);
-          enqueue(cal, ["initNamespace", namespace]);
-        } else {
-          enqueue(cal, args);
-        }
-        return;
-      }
-
-      enqueue(cal, args);
-    };
-  })(window, "https://app.cal.com/embed/embed.js", "init");
-}
-
-export function ScheduleSection() {
-  const calendarRef = useRef(null);
-
-  useEffect(() => {
-    const element = calendarRef.current;
-    if (!element || element.dataset.calInitialized === "true") return;
-
-    element.dataset.calInitialized = "true";
-    loadCalEmbed();
-    window.Cal("init", CALENDAR_NAMESPACE, {
-      origin: "https://app.cal.com",
-    });
-    window.Cal.ns[CALENDAR_NAMESPACE]("inline", {
-      elementOrSelector: "#foundersos-calendar",
-      config: { layout: "month_view", theme: "light" },
-      calLink: CALENDAR_LINK,
-    });
-    window.Cal.ns[CALENDAR_NAMESPACE]("ui", {
-      theme: "light",
-      cssVarsPerTheme: {
-        light: { "cal-brand": "#0aa866" },
-      },
-      hideEventTypeDetails: false,
-      layout: "month_view",
-    });
-
-    // Dispara a conversão do Pixel da OpenAI (GPT Ads) quando o agendamento
-    // é concluído com sucesso no Cal.com.
-    window.Cal.ns[CALENDAR_NAMESPACE]("on", {
-      action: "bookingSuccessful",
-      callback: () => {
-        if (typeof window.oaiq === "function") {
-          window.oaiq("measure", "registration_completed", {
-            type: "customer_action",
-            amount: 0,
-            currency: "USD",
-          });
-        }
-      },
-    });
-  }, []);
-
-  return (
-    <section className="schedule-section paper-surface" id="agendar">
-      <div className="schedule-glow" aria-hidden="true" />
-      <div className="page-container schedule-container">
-        <motion.div className="schedule-heading" {...reveal}>
-          <p className="eyebrow">Agenda aberta</p>
-          <h2>Agende uma conversa</h2>
-          <p>Escolha um horário para falar com nossa equipe.</p>
-        </motion.div>
-
-        <motion.div
-          className="calendar-shell"
-          {...reveal}
-          transition={{ ...reveal.transition, delay: 0.08 }}
-        >
-          <div
-            id="foundersos-calendar"
-            ref={calendarRef}
-            className="calendar-embed"
-            aria-label="Calendário para agendar uma conversa com a Playbook Lab"
-          />
-          <noscript>
-            <a
-              className="calendar-fallback"
-              href={`https://cal.com/${CALENDAR_LINK}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Abrir calendário de agendamento
-            </a>
-          </noscript>
-        </motion.div>
       </div>
     </section>
   );

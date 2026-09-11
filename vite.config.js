@@ -4,8 +4,47 @@ import react from "@vitejs/plugin-react";
 
 const entry = (path) => fileURLToPath(new URL(path, import.meta.url));
 
+/**
+ * As funções de `api/` rodam na Vercel, que o `vite dev` não emula. Este
+ * plugin monta o mesmo handler no dev server para o formulário de interesse
+ * poder ser testado localmente. Só existe em desenvolvimento — o build de
+ * produção não é tocado.
+ */
+const devApi = () => ({
+  name: "founders-dev-api",
+  apply: "serve",
+  configureServer(server) {
+    server.middlewares.use(async (req, res, next) => {
+      if (!req.url?.startsWith("/api/interesse")) return next();
+
+      const chunks = [];
+      for await (const chunk of req) chunks.push(chunk);
+      req.body = Buffer.concat(chunks).toString("utf8");
+
+      res.status = (code) => {
+        res.statusCode = code;
+        return res;
+      };
+      res.json = (payload) => {
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify(payload));
+        return res;
+      };
+
+      try {
+        const { default: handler } = await server.ssrLoadModule(
+          "/api/interesse.js",
+        );
+        await handler(req, res);
+      } catch (error) {
+        res.status(500).json({ error: String(error) });
+      }
+    });
+  },
+});
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), devApi()],
   server: {
     // Continua em 3001 por padrão; PORT permite subir uma segunda instância
     // sem conflitar com um dev server já rodando.

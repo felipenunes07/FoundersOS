@@ -66,6 +66,22 @@
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Escala em monitores menores.
+   O layout foi desenhado para ~1920px de largura. Em telas de 1280 a 1700px
+   (inclui o caso comum de 1920x1080 com escala 125% do Windows, que o
+   navegador enxerga como 1536x864) ele fica grande demais e não cabe na tela.
+   Aqui a pagina inteira e reduzida 20% de forma proporcional: o desenho
+   continua sendo o de 1920px, so que encaixado na tela menor.
+
+   Acima de 1700px NADA muda — monitores grandes continuam exatamente como
+   estao hoje. Abaixo de 1241px tambem nao muda, porque ali ja entram os
+   breakpoints de tablet/mobile, que tem layout proprio. */
+@media (min-width: 1241px) and (max-width: 1700px) {
+  :root {
+    zoom: 0.8;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -776,7 +792,16 @@ main {
    nao ser esticado nem cortado no desktop.
    -------------------------------------------------------------------------- */
 .hero-video-shell {
-  width: min(100%, 1288px);
+  /* Três tetos ao mesmo tempo:
+       100%    — nunca passa do container (que já desconta as gutters);
+       1288px  — largura máxima de projeto, em monitores grandes;
+       80vh    — em monitores baixos (notebook 1366x768, 1920x1080 com a barra
+                 de tarefas) a largura era o único limite e o vídeo, com o
+                 aspecto ~16:9, ficava mais alto que a tela. Aqui a largura é
+                 derivada da altura disponível (80vh convertidos pelo mesmo
+                 aspecto do arquivo), então a janela encolhe junto com o
+                 monitor sem mudar de proporção nem de enquadramento. */
+  width: min(100%, 1288px, calc(80vh * 1716 / 976));
   margin: 0 auto;
 }
 
@@ -6305,13 +6330,19 @@ main {
     display: block;
   }
 
+  /* O header tem 68px e é sticky com z-index alto: com top menor que isso o
+     topo do diagrama (o rótulo "AÇÃO" e os chips dos conectores) ficava
+     escondido atrás dele enquanto a lista rolava.
+     O `top` cola exatamente na base do header — assim o fundo opaco do bloco
+     não deixa nenhuma fresta por onde a lista apareça — e o respiro do
+     diagrama vem do padding, por dentro. */
   .layer-visual {
     position: sticky;
-    top: 62px;
+    top: 68px;
     z-index: 2;
     min-height: 0;
     margin-bottom: 26px;
-    padding: 12px 0 16px;
+    padding: 22px 0 16px;
     /* opaco: a lista rola por baixo do diagrama */
     background: var(--black);
   }
@@ -6340,8 +6371,9 @@ main {
 }
 
 @media (max-width: 760px) {
+  /* Aqui o header encolhe para 60px. */
   .layer-visual {
-    top: 54px;
+    top: 60px;
   }
 
   .layer-svg {
@@ -6357,8 +6389,10 @@ main {
   }
 }
 
-/* Calendário incorporado */
-.schedule-section {
+/* Formulário de interesse na turma
+   Herda a moldura do antigo bloco de agendamento (mesmo fundo, mesmo brilho
+   verde, mesma tipografia) — só o conteúdo do cartão mudou. */
+.interest-section {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -6366,7 +6400,14 @@ main {
   border-bottom: 1px solid rgba(28, 29, 31, 0.12);
 }
 
-.schedule-glow {
+/* Âncora invisível de compatibilidade (#agendar). */
+.anchor-alias {
+  display: block;
+  height: 0;
+  scroll-margin-top: 90px;
+}
+
+.interest-glow {
   position: absolute;
   z-index: -1;
   top: 19%;
@@ -6385,34 +6426,36 @@ main {
   pointer-events: none;
 }
 
-.schedule-container {
+.interest-container {
   position: relative;
 }
 
-.schedule-heading {
+.interest-heading {
   margin: 0 auto 46px;
   text-align: center;
 }
 
-.schedule-heading h2 {
+.interest-heading h2 {
   margin-top: 14px;
   font-family: var(--font-display);
-  font-size: clamp(48px, 6vw, 82px);
+  font-size: clamp(40px, 5vw, 66px);
   font-weight: 500;
-  line-height: 0.98;
-  letter-spacing: -0.065em;
+  line-height: 1;
+  letter-spacing: -0.055em;
 }
 
-.schedule-heading > p:last-child {
-  margin-top: 18px;
+.interest-heading > p:last-child {
+  max-width: 520px;
+  margin: 18px auto 0;
   color: #687069;
   font-size: 15px;
+  line-height: 1.55;
 }
 
-.calendar-shell {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
+.interest-card {
+  width: min(100%, 620px);
+  margin: 0 auto;
+  padding: 38px;
   border: 1px solid rgba(28, 29, 31, 0.14);
   border-radius: 18px;
   background: #fff;
@@ -6421,23 +6464,127 @@ main {
     0 28px 90px rgba(17, 29, 22, 0.12);
 }
 
-.calendar-embed {
-  width: 100%;
-  height: min(790px, 84vh);
-  min-height: 680px;
-  overflow: auto;
+.interest-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
 }
 
-.calendar-fallback {
+/* Telefone ocupa a linha inteira: é o último campo e fica sozinho. */
+.interest-field:last-child {
+  grid-column: 1 / -1;
+}
+
+.interest-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.interest-field > span {
+  color: #4d5450;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.interest-field input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid #dfe2e4;
+  border-radius: 9px;
+  background: #fbfcfc;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 15px;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.interest-field input::placeholder {
+  color: #a9aeb2;
+}
+
+.interest-field input:focus-visible {
+  border-color: var(--green-deep);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(10, 168, 102, 0.14);
+  outline: none;
+}
+
+.interest-field input:disabled {
+  background: #f2f4f3;
+  color: #8b918e;
+}
+
+.interest-form > .button {
+  margin-top: 24px;
+}
+
+.interest-form > small {
+  display: block;
+  margin-top: 14px;
+  color: #8b918e;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.interest-error {
+  margin-top: 18px;
+  padding: 11px 14px;
+  border: 1px solid rgba(190, 62, 46, 0.22);
+  border-radius: 9px;
+  background: rgba(190, 62, 46, 0.06);
+  color: #a8372a;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.interest-spinner {
+  animation: interest-spin 0.9s linear infinite;
+}
+
+@keyframes interest-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.interest-success {
+  padding: 26px 0;
+  text-align: center;
+}
+
+.interest-success-mark {
   display: inline-flex;
-  min-height: 48px;
+  width: 46px;
+  height: 46px;
   align-items: center;
   justify-content: center;
-  margin: 28px;
-  padding: 0 22px;
-  border-radius: 999px;
-  background: #111412;
-  color: #fff;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green-deep);
+}
+
+.interest-success h3 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.interest-success p {
+  margin-top: 8px;
+  color: #687069;
+  font-size: 15px;
 }
 
 /* Mais baixo que isso o diagrama fixo tomaria a tela inteira e não sobraria
@@ -6739,32 +6886,40 @@ main {
     align-items: center;
   }
 
-  .schedule-section {
+  .interest-section {
     padding: 88px 0 96px;
   }
 
-  .schedule-heading {
+  .interest-heading {
     margin-bottom: 30px;
   }
 
-  .schedule-heading h2 {
-    font-size: clamp(42px, 13vw, 58px);
+  .interest-heading h2 {
+    font-size: clamp(34px, 10vw, 46px);
   }
 
-  .schedule-heading > p:last-child {
-    max-width: 290px;
+  .interest-heading > p:last-child {
+    max-width: 320px;
     margin-right: auto;
     margin-left: auto;
     line-height: 1.5;
   }
 
-  .calendar-shell {
+  /* Uma coluna: dois campos lado a lado a 375px deixam o rótulo e o
+     placeholder truncados. */
+  .interest-card {
+    padding: 24px 20px;
     border-radius: 13px;
   }
 
-  .calendar-embed {
-    height: 760px;
-    min-height: 760px;
+  .interest-fields {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  /* 16px evita o zoom automático do Safari ao focar o campo. */
+  .interest-field input {
+    font-size: 16px;
   }
 }
 
