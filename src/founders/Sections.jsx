@@ -589,13 +589,12 @@ export function FinalCta() {
         <div className="final-cta-grid">
           <motion.div className="price-column" {...reveal}>
             <p className="eyebrow">Piloto de lançamento</p>
-            <div className="price">
-              <span>R$</span>
-              <strong>3.000</strong>
-            </div>
-            <p className="price-note">à vista · sem mensalidade</p>
-            <p className="price-installment">
-              ou <strong>12x de R$ 309,85</strong>
+            <h3 className="price-lead">
+              Quatro semanas para montar o seu FoundersOS.
+            </h3>
+            <p className="price-note">
+              Turma atual em andamento · a próxima abre primeiro para a lista de
+              espera
             </p>
             <ul>
               <li>

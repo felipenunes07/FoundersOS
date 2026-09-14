@@ -15,7 +15,7 @@
  *   "open"     → turma aberta: CTA de inscrição na próxima turma.
  *   "waitlist" → turma em andamento/fechada: CTA de lista de espera.
  */
-export const COHORT_STATUS = "open";
+export const COHORT_STATUS = "waitlist";
 
 /**
  * Dados da próxima turma.
@@ -82,8 +82,16 @@ export const cohort = {
   ...copy,
   status: COHORT_STATUS,
   isOpen: COHORT_STATUS === "open",
-  /** Data no bloco "Próxima turma": cai no nome da turma se não houver data. */
-  dateLabel: COHORT.startDate || COHORT.name,
+  /**
+   * Data no bloco "Próxima turma".
+   *   open     → a data da turma; sem data, o nome dela.
+   *   waitlist → a turma atual já está rodando, então a próxima ainda não tem
+   *              data: mostrar o nome da turma em andamento seria enganoso.
+   */
+  dateLabel:
+    COHORT_STATUS === "waitlist"
+      ? "A definir"
+      : COHORT.startDate || COHORT.name,
   /** Selo do hero: curto, some com a data quando a turma já fechou. */
   pillLabel:
     COHORT_STATUS === "open"

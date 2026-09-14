@@ -118,11 +118,8 @@ export function InterestSection() {
         <motion.div className="interest-heading" {...reveal}>
           <p className="eyebrow">{cohort.seats}</p>
           <h2>{cohort.ctaPrimary}</h2>
-          <p>
-            Preencha seus dados para demonstrar interesse na próxima turma.
-            Nosso time entra em contato para confirmar se ela faz sentido para o
-            seu momento.
-          </p>
+          {/* Muda sozinho entre turma aberta e lista de espera (cohort.js). */}
+          <p>{cohort.ctaLead}</p>
         </motion.div>
 
         <motion.div
@@ -135,8 +132,16 @@ export function InterestSection() {
               <span className="interest-success-mark">
                 <Check size={20} />
               </span>
-              <h3>Recebemos seu interesse.</h3>
-              <p>Entraremos em contato com você.</p>
+              <h3>
+                {cohort.isOpen
+                  ? "Recebemos seu interesse."
+                  : "Você está na lista de espera."}
+              </h3>
+              <p>
+                {cohort.isOpen
+                  ? "Entraremos em contato com você."
+                  : "Avisamos assim que as vagas da próxima turma abrirem."}
+              </p>
             </div>
           ) : (
             <form className="interest-form" onSubmit={onSubmit} noValidate={false}>

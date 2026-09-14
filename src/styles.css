@@ -3972,6 +3972,19 @@ main {
   background: var(--paper-deep);
 }
 
+/* Chamada da coluna da esquerda enquanto a turma está em lista de espera —
+   ocupa o lugar que era do preço. As regras `.price*` abaixo continuam aqui
+   para quando as inscrições reabrirem com valor na página. */
+.price-lead {
+  margin-top: 32px;
+  max-width: 13ch;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 2.4vw, 40px);
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+}
+
 .price {
   display: flex;
   align-items: flex-start;
