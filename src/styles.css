@@ -75,9 +75,12 @@
 
    Acima de 1700px NADA muda — monitores grandes continuam exatamente como
    estao hoje. Abaixo de 1241px tambem nao muda, porque ali ja entram os
-   breakpoints de tablet/mobile, que tem layout proprio. */
+   breakpoints de tablet/mobile, que tem layout proprio.
+
+   Vale so para a pagina da turma (turma/index.html marca o html com
+   data-page="turma"). A landing individual fica no tamanho original. */
 @media (min-width: 1241px) and (max-width: 1700px) {
-  :root {
+  html[data-page="turma"] {
     zoom: 0.8;
   }
 }
