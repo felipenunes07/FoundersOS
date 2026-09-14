@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { useState } from "react";
-import { cohort } from "./cohort";
+import { offer } from "./offer";
 
 /** Endpoint serverless (api/interesse.js). Ver .env.example para a config. */
 const ENDPOINT = "/api/interesse";
@@ -88,7 +88,7 @@ export function InterestSection() {
       const response = await fetch(ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, origem: "landing-foundersos" }),
+        body: JSON.stringify({ ...values, origem: offer.form.origem }),
       });
 
       if (!response.ok) {
@@ -116,10 +116,10 @@ export function InterestSection() {
 
       <div className="page-container interest-container">
         <motion.div className="interest-heading" {...reveal}>
-          <p className="eyebrow">{cohort.seats}</p>
-          <h2>{cohort.ctaPrimary}</h2>
-          {/* Muda sozinho entre turma aberta e lista de espera (cohort.js). */}
-          <p>{cohort.ctaLead}</p>
+          <p className="eyebrow">{offer.form.eyebrow}</p>
+          <h2>{offer.form.title}</h2>
+          {/* Muda com a oferta da pagina (offer.js) e com o estado da turma. */}
+          <p>{offer.form.lead}</p>
         </motion.div>
 
         <motion.div
@@ -132,16 +132,8 @@ export function InterestSection() {
               <span className="interest-success-mark">
                 <Check size={20} />
               </span>
-              <h3>
-                {cohort.isOpen
-                  ? "Recebemos seu interesse."
-                  : "Você está na lista de espera."}
-              </h3>
-              <p>
-                {cohort.isOpen
-                  ? "Entraremos em contato com você."
-                  : "Avisamos assim que as vagas da próxima turma abrirem."}
-              </p>
+              <h3>{offer.form.success.title}</h3>
+              <p>{offer.form.success.text}</p>
             </div>
           ) : (
             <form className="interest-form" onSubmit={onSubmit} noValidate={false}>
@@ -187,7 +179,7 @@ export function InterestSection() {
                 )}
               </button>
 
-              <small>{cohort.ctaNote}</small>
+              <small>{offer.form.note}</small>
             </form>
           )}
         </motion.div>

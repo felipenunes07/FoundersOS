@@ -1,4 +1,11 @@
 {
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "turma.foundersos.com.br" }],
+      "destination": "/turma/index.html"
+    }
+  ],
   "redirects": [
     {
       "source": "/guias/obsidian-para-founders",

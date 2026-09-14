@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { cohort } from "./cohort";
+import { offer } from "./offer";
 import { CompoundingChart } from "./CompoundingChart";
 import { LayerDiagram } from "./LayerDiagram";
 import { VaultVideoDemo } from "./VaultVideo";
@@ -84,13 +85,13 @@ export function Hero() {
     >
       <div className="hero-copy">
         <motion.a
-          href="#metodo"
+          href={offer.heroPill.href}
           className="hero-pill"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.5 }}
         >
-          {cohort.pillLabel} <ChevronRight size={13} />
+          {offer.heroPill.label} <ChevronRight size={13} />
         </motion.a>
 
         <motion.h1
@@ -107,9 +108,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.32, duration: 0.55 }}
         >
-          Um sistema operacional de IA que vê, escuta, lê e age em todas as
-          frentes que você toca. Você constrói o seu em quatro semanas, junto
-          com a turma.
+          {offer.heroLead}
         </motion.p>
 
         <motion.div
@@ -118,16 +117,16 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <a className="button button-outline" href="#sistema">
-            Ver como funciona
+          <a className="button button-outline" href={offer.heroActions.outline.href}>
+            {offer.heroActions.outline.label}
           </a>
           <a
             className="button button-dark"
-            href={cohort.ctaHref}
-            target={cohort.ctaTarget}
-            rel={cohort.ctaRel}
+            href={offer.heroActions.primary.href}
+            target={offer.heroActions.primary.target}
+            rel={offer.heroActions.primary.rel}
           >
-            {cohort.ctaPrimary} <ArrowRight size={15} />
+            {offer.heroActions.primary.label} <ArrowRight size={15} />
           </a>
         </motion.div>
       </div>
@@ -376,7 +375,7 @@ export function LayerSection() {
           {[
             ["1 núcleo", "uma identidade consistente"],
             ["Memória local", "contexto que fica com você"],
-            ["5 skills", "que você constrói na turma"],
+            ["5 skills", offer.skillsCaption],
             ["Rotinas ativas", "o sistema trabalhando sozinho"],
           ].map(([value, label]) => (
             <div key={value}>
@@ -416,11 +415,7 @@ export function CompoundingSection() {
         </div>
 
         <div className="reason-rail">
-          {[
-            ["Contexto acumulado", "O ativo cresce todos os dias."],
-            ["Programa guiado", "4 semanas com Definition of Done."],
-            ["Packs prontos", "Skills testadas que você adapta."],
-          ].map(([title, copy], index) => (
+          {offer.reasons.map(([title, copy], index) => (
             <motion.div
               key={title}
               {...reveal}
@@ -437,52 +432,21 @@ export function CompoundingSection() {
   );
 }
 
-const PHASES = [
-  {
-    step: "01",
-    weeks: "Semana 1",
-    title: "Fundação + contexto",
-    copy: "Você mapeia o seu negócio e monta a arquitetura inicial do cérebro, com os primeiros conectores lendo dados reais.",
-    done: "Cérebro no ar",
-  },
-  {
-    step: "02",
-    weeks: "Semana 2",
-    title: "Memória + organização",
-    copy: "Como organizar a memória do negócio e usar o sistema no dia a dia — sem precisar virar especialista técnico.",
-    done: "Memória organizada",
-  },
-  {
-    step: "03",
-    weeks: "Semana 3",
-    title: "Skills + rotinas",
-    copy: "Você constrói cinco skills a partir dos packs Playbook Lab e agenda as rotinas que rodam sozinhas.",
-    done: "Skills e rotinas rodando",
-  },
-  {
-    step: "04",
-    weeks: "Semana 4",
-    title: "Conexões + operação",
-    copy: "Conectores, refinamento e consolidação: documentação, treino e plano de continuidade para o sistema seguir rodando.",
-    done: "Sistema em operação",
-  },
-];
+const PHASES = offer.phases;
 
 export function MethodSection() {
   return (
     <section className="method-section grid-surface" id="metodo">
       <div className="page-container">
         <SectionLead
-          eyebrow="O programa"
+          eyebrow={offer.method.eyebrow}
           title={
             <>
-              Quatro semanas. Oito encontros.{" "}
-              <span className="muted-title">
-                Cada semana termina com algo funcionando.
-              </span>
+              {offer.method.title}{" "}
+              <span className="muted-title">{offer.method.subtitle}</span>
             </>
           }
-          copy="A turma inteira avança no mesmo ciclo, com encontros ao vivo e uma metodologia guiada — não é curso gravado nem consultoria feita por nós no seu lugar. Escopo e definição de pronto visíveis desde o primeiro dia."
+          copy={offer.method.copy}
         />
 
         <ol className="method-grid">
@@ -533,7 +497,7 @@ const OWNERSHIP = [
   {
     icon: HardDrive,
     title: "Autonomia",
-    copy: "Quando o programa acaba, o FoundersOS continua rodando.",
+    copy: offer.persistenceCopy,
   },
   {
     icon: Lock,
@@ -589,27 +553,32 @@ export function FinalCta() {
         <div className="final-cta-grid">
           <motion.div className="price-column" {...reveal}>
             <p className="eyebrow">Piloto de lançamento</p>
-            <h3 className="price-lead">
-              Quatro semanas para montar o seu FoundersOS.
-            </h3>
-            <p className="price-note">
-              Turma atual em andamento · a próxima abre primeiro para a lista de
-              espera
-            </p>
+
+            {/* Com preco (individual) ou com a chamada do programa (turma). */}
+            {offer.price ? (
+              <>
+                <div className="price">
+                  <span>R$</span>
+                  <strong>{offer.price.amount}</strong>
+                </div>
+                <p className="price-note">{offer.price.note}</p>
+                <p className="price-installment">
+                  ou <strong>{offer.price.installment}</strong>
+                </p>
+              </>
+            ) : (
+              <>
+                <h3 className="price-lead">{offer.priceLead.title}</h3>
+                <p className="price-note">{offer.priceLead.note}</p>
+              </>
+            )}
+
             <ul>
-              <li>
-                <Check size={14} /> Programa guiado de 4 semanas
-              </li>
-              <li>
-                <Check size={14} /> 8 encontros ao vivo com a turma
-              </li>
-              <li>
-                <Check size={14} /> Grupo de WhatsApp para suporte durante o
-                programa
-              </li>
-              <li>
-                <Check size={14} /> Sistema e documentação ficam com você
-              </li>
+              {offer.includes.map((item) => (
+                <li key={item}>
+                  <Check size={14} /> {item}
+                </li>
+              ))}
             </ul>
           </motion.div>
 
@@ -619,35 +588,38 @@ export function FinalCta() {
             transition={{ ...reveal.transition, delay: 0.08 }}
           >
             <span className="live-chip">
-              <i /> {cohort.seats}
+              <i /> {offer.chip}
             </span>
             <h2>Pare de explicar sua empresa toda vez que abrir o chat.</h2>
-            <p>{cohort.ctaLead}</p>
+            <p>{offer.ctaLead}</p>
 
-            <div className="cohort-meta">
-              <div>
-                <span>Próxima turma</span>
-                <strong>{cohort.dateLabel}</strong>
+            {/* Data / formato / vagas so fazem sentido na pagina da turma. */}
+            {offer.showCohortMeta && (
+              <div className="cohort-meta">
+                <div>
+                  <span>Próxima turma</span>
+                  <strong>{cohort.dateLabel}</strong>
+                </div>
+                <div>
+                  <span>Formato</span>
+                  <strong>{cohort.format}</strong>
+                </div>
+                <div>
+                  <span>Vagas</span>
+                  <strong>{cohort.seats}</strong>
+                </div>
               </div>
-              <div>
-                <span>Formato</span>
-                <strong>{cohort.format}</strong>
-              </div>
-              <div>
-                <span>Vagas</span>
-                <strong>{cohort.seats}</strong>
-              </div>
-            </div>
+            )}
 
             <a
               className="button button-dark button-large"
-              href={cohort.ctaHref}
-              target={cohort.ctaTarget}
-              rel={cohort.ctaRel}
+              href={offer.ctaButton.href}
+              target={offer.ctaButton.target}
+              rel={offer.ctaButton.rel}
             >
-              {cohort.ctaPrimary} <ArrowRight size={16} />
+              {offer.ctaButton.label} <ArrowRight size={16} />
             </a>
-            <small>{cohort.ctaNote}</small>
+            <small>{offer.ctaNote}</small>
           </motion.div>
         </div>
       </div>

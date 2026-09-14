@@ -7,7 +7,7 @@ import {
   X,
 } from "lucide-react";
 import { BrandMark } from "./founders/BrandMark";
-import { cohort } from "./founders/cohort";
+import { offer } from "./founders/offer";
 import {
   BrainAnatomy,
   CompoundingSection,
@@ -43,9 +43,9 @@ function Header() {
     <>
       <div className="announcement">
         <span className="announcement-dot" />
-        <span>FoundersOS · {cohort.announcement}</span>
-        <a href="#metodo">
-          Ver o programa <ArrowRight size={13} />
+        <span>FoundersOS · {offer.announcement}</span>
+        <a href={offer.announcementCta.href}>
+          {offer.announcementCta.label} <ArrowRight size={13} />
         </a>
       </div>
 
@@ -67,11 +67,11 @@ function Header() {
             <span className="playbook-signature">por Playbook Lab</span>
             <a
               className="button button-dark button-small"
-              href={cohort.ctaHref}
-              target={cohort.ctaTarget}
-              rel={cohort.ctaRel}
+              href={offer.headerCta.href}
+              target={offer.headerCta.target}
+              rel={offer.headerCta.rel}
             >
-              {cohort.ctaShort}
+              {offer.headerCta.label}
             </a>
             <button
               className="menu-button"
@@ -103,14 +103,14 @@ function Header() {
             ))}
             <a
               className="button button-dark"
-              href={cohort.ctaHref}
-              target={cohort.ctaTarget}
-              rel={cohort.ctaRel}
+              href={offer.headerCta.href}
+              target={offer.headerCta.target}
+              rel={offer.headerCta.rel}
               onClick={() => {
                 setMobileOpen(false);
               }}
             >
-              {cohort.ctaShort}
+              {offer.headerCta.label}
             </a>
           </motion.nav>
         )}
@@ -124,13 +124,9 @@ function Footer() {
     <footer className="site-footer">
       <div className="footer-top">
         <BrandMark light />
-        <p>
-          Um programa guiado, em turma, para construir o segundo cérebro que
-          aprende o contexto do fundador e trabalha dentro das ferramentas que
-          ele já usa.
-        </p>
-        <a className="footer-contact" href="#turma">
-          Quero participar da próxima turma <ArrowRight size={15} />
+        <p>{offer.footerLead}</p>
+        <a className="footer-contact" href={offer.footerCta.href}>
+          {offer.footerCta.label} <ArrowRight size={15} />
         </a>
       </div>
 

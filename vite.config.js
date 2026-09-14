@@ -56,7 +56,12 @@ export default defineConfig({
       // Site multipágina: a landing é React; os guias são HTML estático, que é
       // o formato que o Google indexa sem depender de renderizar JS.
       input: {
+        // Duas ofertas, o mesmo app React: o index é a implantação individual
+        // (www) e turma/ é o programa em turma (turma.foundersos.com.br). As
+        // duas entradas existem para cada domínio ter o seu próprio SEO e card
+        // de compartilhamento; o conteúdo quem escolhe é src/founders/offer.js.
         index: entry("index.html"),
+        turma: entry("turma/index.html"),
         guias: entry("guias/index.html"),
         "guia-segundo-cerebro": entry(
           "guias/segundo-cerebro-para-empresas/index.html",
