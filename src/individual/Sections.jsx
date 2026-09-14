@@ -17,15 +17,14 @@ import {
   Sparkles,
   Unplug,
 } from "lucide-react";
-import { useRef, useState } from "react";
-import { cohort } from "./cohort";
-import { CompoundingChart } from "./CompoundingChart";
-import { LayerDiagram } from "./LayerDiagram";
-import { VaultVideoDemo } from "./VaultVideo";
+import { useEffect, useRef, useState } from "react";
+import { CompoundingChart } from "../founders/CompoundingChart";
+import { LayerDiagram } from "../founders/LayerDiagram";
+import { ObsidianVaultDemo } from "./ObsidianWorkspace";
 import {
   BrainOrbit,
   SenseInterface,
-} from "./ProductUI";
+} from "../founders/ProductUI";
 
 const reveal = {
   initial: { opacity: 0, y: 14 },
@@ -84,13 +83,13 @@ export function Hero() {
     >
       <div className="hero-copy">
         <motion.a
-          href="#metodo"
+          href="#cerebro"
           className="hero-pill"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.5 }}
         >
-          {cohort.pillLabel} <ChevronRight size={13} />
+          O segundo cérebro do fundador <ChevronRight size={13} />
         </motion.a>
 
         <motion.h1
@@ -108,8 +107,7 @@ export function Hero() {
           transition={{ delay: 0.32, duration: 0.55 }}
         >
           Um sistema operacional de IA que vê, escuta, lê e age em todas as
-          frentes que você toca. Você constrói o seu em quatro semanas, junto
-          com a turma.
+          frentes que você toca.
         </motion.p>
 
         <motion.div
@@ -118,16 +116,11 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <a className="button button-outline" href="#sistema">
-            Ver como funciona
+          <a className="button button-outline" href="#agendar">
+            Agendar uma conversa
           </a>
-          <a
-            className="button button-dark"
-            href={cohort.ctaHref}
-            target={cohort.ctaTarget}
-            rel={cohort.ctaRel}
-          >
-            {cohort.ctaPrimary} <ArrowRight size={15} />
+          <a className="button button-dark" href="#sistema">
+            Ver como funciona <ArrowRight size={15} />
           </a>
         </motion.div>
       </div>
@@ -138,7 +131,10 @@ export function Hero() {
           style={{ scale: visualScale, y: visualY }}
         >
           <div className="hero-visual-view">
-            <VaultVideoDemo className="hero-video-shell" />
+            <ObsidianVaultDemo
+              className="hero-obsidian-shell"
+              initialSelected="foundersos"
+            />
           </div>
         </motion.div>
       </div>
@@ -376,7 +372,7 @@ export function LayerSection() {
           {[
             ["1 núcleo", "uma identidade consistente"],
             ["Memória local", "contexto que fica com você"],
-            ["5 skills", "que você constrói na turma"],
+            ["5 skills", "construídas para sua rotina"],
             ["Rotinas ativas", "o sistema trabalhando sozinho"],
           ].map(([value, label]) => (
             <div key={value}>
@@ -418,8 +414,8 @@ export function CompoundingSection() {
         <div className="reason-rail">
           {[
             ["Contexto acumulado", "O ativo cresce todos os dias."],
-            ["Programa guiado", "4 semanas com Definition of Done."],
-            ["Packs prontos", "Skills testadas que você adapta."],
+            ["Método fechado", "4 semanas com Definition of Done."],
+            ["Packs prontos", "Skills testadas e adaptadas."],
           ].map(([title, copy], index) => (
             <motion.div
               key={title}
@@ -441,30 +437,30 @@ const PHASES = [
   {
     step: "01",
     weeks: "Semana 1",
-    title: "Fundação + contexto",
-    copy: "Você mapeia o seu negócio e monta a arquitetura inicial do cérebro, com os primeiros conectores lendo dados reais.",
+    title: "Diagnóstico + base",
+    copy: "Mapeamento, estrutura do cérebro e conectores lendo dados reais.",
     done: "Cérebro no ar",
   },
   {
     step: "02",
     weeks: "Semana 2",
-    title: "Memória + organização",
-    copy: "Como organizar a memória do negócio e usar o sistema no dia a dia — sem precisar virar especialista técnico.",
-    done: "Memória organizada",
+    title: "Skills sob medida",
+    copy: "Cinco skills construídas e validadas nos cenários do fundador.",
+    done: "5 skills rodando",
   },
   {
     step: "03",
     weeks: "Semana 3",
-    title: "Skills + rotinas",
-    copy: "Você constrói cinco skills a partir dos packs Playbook Lab e agenda as rotinas que rodam sozinhas.",
-    done: "Skills e rotinas rodando",
+    title: "Packs + rotinas",
+    copy: "Packs Playbook Lab adaptados e rotinas automáticas agendadas.",
+    done: "Sistema em ação",
   },
   {
     step: "04",
     weeks: "Semana 4",
-    title: "Conexões + operação",
-    copy: "Conectores, refinamento e consolidação: documentação, treino e plano de continuidade para o sistema seguir rodando.",
-    done: "Sistema em operação",
+    title: "Treino + autonomia",
+    copy: "Documentação, vídeos, treinamento e plano de continuidade.",
+    done: "Operação entregue",
   },
 ];
 
@@ -473,16 +469,16 @@ export function MethodSection() {
     <section className="method-section grid-surface" id="metodo">
       <div className="page-container">
         <SectionLead
-          eyebrow="O programa"
+          eyebrow="O método"
           title={
             <>
-              Quatro semanas. Oito encontros.{" "}
+              Um mês. Quatro reuniões.{" "}
               <span className="muted-title">
-                Cada semana termina com algo funcionando.
+                Cada fase termina com algo funcionando.
               </span>
             </>
           }
-          copy="A turma inteira avança no mesmo ciclo, com encontros ao vivo e uma metodologia guiada — não é curso gravado nem consultoria feita por nós no seu lugar. Escopo e definição de pronto visíveis desde o primeiro dia."
+          copy="Produto produtizado, não projeto aberto. Escopo e definição de pronto visíveis desde o primeiro dia."
         />
 
         <ol className="method-grid">
@@ -533,7 +529,7 @@ const OWNERSHIP = [
   {
     icon: HardDrive,
     title: "Autonomia",
-    copy: "Quando o programa acaba, o FoundersOS continua rodando.",
+    copy: "Quando o projeto acaba, o FoundersOS continua rodando.",
   },
   {
     icon: Lock,
@@ -589,23 +585,20 @@ export function FinalCta() {
         <div className="final-cta-grid">
           <motion.div className="price-column" {...reveal}>
             <p className="eyebrow">Piloto de lançamento</p>
-            <h3 className="price-lead">
-              Quatro semanas para montar o seu FoundersOS.
-            </h3>
-            <p className="price-note">
-              Turma atual em andamento · a próxima abre primeiro para a lista de
-              espera
+            <div className="price">
+              <span>R$</span>
+              <strong>6.000</strong>
+            </div>
+            <p className="price-note">à vista · sem mensalidade</p>
+            <p className="price-installment">
+              ou <strong>12x de R$ 619,70</strong>
             </p>
             <ul>
               <li>
-                <Check size={14} /> Programa guiado de 4 semanas
+                <Check size={14} /> 4 semanas de implantação
               </li>
               <li>
-                <Check size={14} /> 8 encontros ao vivo com a turma
-              </li>
-              <li>
-                <Check size={14} /> Grupo de WhatsApp para suporte durante o
-                programa
+                <Check size={14} /> 4 reuniões de acompanhamento
               </li>
               <li>
                 <Check size={14} /> Sistema e documentação ficam com você
@@ -619,37 +612,143 @@ export function FinalCta() {
             transition={{ ...reveal.transition, delay: 0.08 }}
           >
             <span className="live-chip">
-              <i /> {cohort.seats}
+              <i /> Agenda aberta
             </span>
             <h2>Pare de explicar sua empresa toda vez que abrir o chat.</h2>
-            <p>{cohort.ctaLead}</p>
-
-            <div className="cohort-meta">
-              <div>
-                <span>Próxima turma</span>
-                <strong>{cohort.dateLabel}</strong>
-              </div>
-              <div>
-                <span>Formato</span>
-                <strong>{cohort.format}</strong>
-              </div>
-              <div>
-                <span>Vagas</span>
-                <strong>{cohort.seats}</strong>
-              </div>
-            </div>
-
-            <a
-              className="button button-dark button-large"
-              href={cohort.ctaHref}
-              target={cohort.ctaTarget}
-              rel={cohort.ctaRel}
-            >
-              {cohort.ctaPrimary} <ArrowRight size={16} />
+            <p>
+              Escolha um horário disponível e fale direto com a equipe da
+              Playbook Lab.
+            </p>
+            <a className="button button-dark button-large" href="#agendar">
+              Agendar uma conversa <ArrowRight size={16} />
             </a>
-            <small>{cohort.ctaNote}</small>
+            <small>Sem formulário longo. Agendamento direto.</small>
           </motion.div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+const CALENDAR_NAMESPACE = "foundersos";
+const CALENDAR_LINK = "victor-playbooklab/bate-papo-foundersos";
+
+function loadCalEmbed() {
+  if (window.Cal) return;
+
+  ((windowRef, embedUrl, initCommand) => {
+    const enqueue = (target, args) => target.q.push(args);
+    const documentRef = windowRef.document;
+
+    windowRef.Cal = windowRef.Cal || function calQueue() {
+      const cal = windowRef.Cal;
+      const args = arguments;
+
+      if (!cal.loaded) {
+        cal.ns = {};
+        cal.q = cal.q || [];
+        const script = documentRef.createElement("script");
+        script.src = embedUrl;
+        script.async = true;
+        documentRef.head.appendChild(script);
+        cal.loaded = true;
+      }
+
+      if (args[0] === initCommand) {
+        const namespace = args[1];
+        const api = function calNamespaceQueue() {
+          enqueue(api, arguments);
+        };
+        api.q = api.q || [];
+        if (typeof namespace === "string") {
+          cal.ns[namespace] = cal.ns[namespace] || api;
+          enqueue(cal.ns[namespace], args);
+          enqueue(cal, ["initNamespace", namespace]);
+        } else {
+          enqueue(cal, args);
+        }
+        return;
+      }
+
+      enqueue(cal, args);
+    };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+}
+
+export function ScheduleSection() {
+  const calendarRef = useRef(null);
+
+  useEffect(() => {
+    const element = calendarRef.current;
+    if (!element || element.dataset.calInitialized === "true") return;
+
+    element.dataset.calInitialized = "true";
+    loadCalEmbed();
+    window.Cal("init", CALENDAR_NAMESPACE, {
+      origin: "https://app.cal.com",
+    });
+    window.Cal.ns[CALENDAR_NAMESPACE]("inline", {
+      elementOrSelector: "#foundersos-calendar",
+      config: { layout: "month_view", theme: "light" },
+      calLink: CALENDAR_LINK,
+    });
+    window.Cal.ns[CALENDAR_NAMESPACE]("ui", {
+      theme: "light",
+      cssVarsPerTheme: {
+        light: { "cal-brand": "#0aa866" },
+      },
+      hideEventTypeDetails: false,
+      layout: "month_view",
+    });
+
+    // Dispara a conversão do Pixel da OpenAI (GPT Ads) quando o agendamento
+    // é concluído com sucesso no Cal.com.
+    window.Cal.ns[CALENDAR_NAMESPACE]("on", {
+      action: "bookingSuccessful",
+      callback: () => {
+        if (typeof window.oaiq === "function") {
+          window.oaiq("measure", "registration_completed", {
+            type: "customer_action",
+            amount: 0,
+            currency: "USD",
+          });
+        }
+      },
+    });
+  }, []);
+
+  return (
+    <section className="schedule-section paper-surface" id="agendar">
+      <div className="schedule-glow" aria-hidden="true" />
+      <div className="page-container schedule-container">
+        <motion.div className="schedule-heading" {...reveal}>
+          <p className="eyebrow">Agenda aberta</p>
+          <h2>Agende uma conversa</h2>
+          <p>Escolha um horário para falar com nossa equipe.</p>
+        </motion.div>
+
+        <motion.div
+          className="calendar-shell"
+          {...reveal}
+          transition={{ ...reveal.transition, delay: 0.08 }}
+        >
+          <div
+            id="foundersos-calendar"
+            ref={calendarRef}
+            className="calendar-embed"
+            aria-label="Calendário para agendar uma conversa com a Playbook Lab"
+          />
+          <noscript>
+            <a
+              className="calendar-fallback"
+              href={`https://cal.com/${CALENDAR_LINK}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Abrir calendário de agendamento
+            </a>
+          </noscript>
+        </motion.div>
       </div>
     </section>
   );

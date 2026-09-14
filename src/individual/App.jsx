@@ -1,3 +1,11 @@
+/**
+ * Página da implantação individual (www.foundersos.com.br).
+ *
+ * É a landing como ela era antes de virar a página da turma: mesmo texto,
+ * mesmo preço e o calendário do Cal.com no fim. A página da turma vive em
+ * src/App.jsx e evoluiu por outro caminho — as duas dividem os componentes
+ * visuais de src/founders/, não o conteúdo.
+ */
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 import {
@@ -6,8 +14,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import { BrandMark } from "./founders/BrandMark";
-import { cohort } from "./founders/cohort";
+import { BrandMark } from "../founders/BrandMark";
 import {
   BrainAnatomy,
   CompoundingSection,
@@ -17,8 +24,8 @@ import {
   LocalOwnership,
   MethodSection,
   ProductShowcase,
-} from "./founders/Sections";
-import { InterestSection } from "./founders/InterestForm";
+  ScheduleSection,
+} from "./Sections";
 
 const NAV_ITEMS = [
   ["Sistema", "#sistema"],
@@ -43,9 +50,9 @@ function Header() {
     <>
       <div className="announcement">
         <span className="announcement-dot" />
-        <span>FoundersOS · {cohort.announcement}</span>
-        <a href="#metodo">
-          Ver o programa <ArrowRight size={13} />
+        <span>FoundersOS · o segundo cérebro do fundador</span>
+        <a href="#sistema">
+          Conheça o sistema <ArrowRight size={13} />
         </a>
       </div>
 
@@ -65,13 +72,8 @@ function Header() {
 
           <div className="header-actions">
             <span className="playbook-signature">por Playbook Lab</span>
-            <a
-              className="button button-dark button-small"
-              href={cohort.ctaHref}
-              target={cohort.ctaTarget}
-              rel={cohort.ctaRel}
-            >
-              {cohort.ctaShort}
+            <a className="button button-dark button-small" href="#agendar">
+              Agendar conversa
             </a>
             <button
               className="menu-button"
@@ -103,14 +105,12 @@ function Header() {
             ))}
             <a
               className="button button-dark"
-              href={cohort.ctaHref}
-              target={cohort.ctaTarget}
-              rel={cohort.ctaRel}
+              href="#agendar"
               onClick={() => {
                 setMobileOpen(false);
               }}
             >
-              {cohort.ctaShort}
+              Agendar conversa
             </a>
           </motion.nav>
         )}
@@ -125,12 +125,11 @@ function Footer() {
       <div className="footer-top">
         <BrandMark light />
         <p>
-          Um programa guiado, em turma, para construir o segundo cérebro que
-          aprende o contexto do fundador e trabalha dentro das ferramentas que
-          ele já usa.
+          Um sistema operacional de IA que aprende o contexto do fundador e
+          trabalha dentro das ferramentas que ele já usa.
         </p>
-        <a className="footer-contact" href="#turma">
-          Quero participar da próxima turma <ArrowRight size={15} />
+        <a className="footer-contact" href="#agendar">
+          Agendar uma conversa <ArrowRight size={15} />
         </a>
       </div>
 
@@ -179,7 +178,7 @@ export default function App() {
         <MethodSection />
         <LocalOwnership />
         <FinalCta />
-        <InterestSection />
+        <ScheduleSection />
       </main>
       <Footer />
     </div>
