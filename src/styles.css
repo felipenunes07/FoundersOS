@@ -66,24 +66,6 @@
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Escala em monitores menores.
-   O layout foi desenhado para ~1920px de largura. Em telas de 1280 a 1700px
-   (inclui o caso comum de 1920x1080 com escala 125% do Windows, que o
-   navegador enxerga como 1536x864) ele fica grande demais e não cabe na tela.
-   Aqui a pagina inteira e reduzida 20% de forma proporcional: o desenho
-   continua sendo o de 1920px, so que encaixado na tela menor.
-
-   Acima de 1700px NADA muda — monitores grandes continuam exatamente como
-   estao hoje. Abaixo de 1241px tambem nao muda, porque ali ja entram os
-   breakpoints de tablet/mobile, que tem layout proprio.
-
-   Vale so para a pagina da turma (turma/index.html marca o html com
-   data-page="turma"). A landing individual fica no tamanho original. */
-@media (min-width: 1241px) and (max-width: 1700px) {
-  html[data-page="turma"] {
-    zoom: 0.8;
-  }
-}
 
 * {
   box-sizing: border-box;
