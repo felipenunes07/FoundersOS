@@ -14,18 +14,22 @@
  * ---------------------------------------------------------------------------
  * CONFIGURAÇÃO — Vercel › Project › Settings › Environment Variables
  * ---------------------------------------------------------------------------
- *   LEAD_NOTIFICATION_EMAIL  (obrigatória p/ e-mail) destino da notificação.
- *                            Aceita vários separados por vírgula.
+ *   LEAD_NOTIFICATION_EMAIL  (opcional) destino da notificação. Aceita vários
+ *                            separados por vírgula. Sem ela, vale o padrão
+ *                            abaixo (DEFAULT_NOTIFICATION_EMAIL).
  *   RESEND_API_KEY           (obrigatória p/ e-mail) chave da conta Resend.
  *   LEAD_FROM_EMAIL          (opcional) remetente; precisa ser de um domínio
  *                            verificado no Resend. Default: onboarding@resend.dev
  *   KV_REST_API_URL          (opcional) URL REST do Vercel KV / Upstash.
  *   KV_REST_API_TOKEN        (opcional) token REST correspondente.
  *
- * NENHUM endereço de e-mail está fixo no código de propósito: enquanto
- * LEAD_NOTIFICATION_EMAIL não for preenchida, o lead continua sendo salvo e
- * registrado no log, e a resposta avisa que a notificação não saiu.
+ * O que NÃO dá para resolver por código: sem RESEND_API_KEY nenhum e-mail sai.
+ * Nesse caso o lead continua sendo salvo e registrado no log, e a resposta
+ * avisa que a notificação não saiu.
  */
+
+/** Quem recebe os leads quando LEAD_NOTIFICATION_EMAIL não está configurada. */
+const DEFAULT_NOTIFICATION_EMAIL = "victor@playbooklab.com.br";
 
 const MAX_FIELD_LENGTH = 200;
 
@@ -124,7 +128,7 @@ function escapeHtml(value) {
 /** Notificação por e-mail via Resend. Silenciosa quando não configurada. */
 async function notify(lead) {
   const apiKey = process.env.RESEND_API_KEY;
-  const to = (process.env.LEAD_NOTIFICATION_EMAIL || "")
+  const to = (process.env.LEAD_NOTIFICATION_EMAIL || DEFAULT_NOTIFICATION_EMAIL)
     .split(",")
     .map((address) => address.trim())
     .filter(Boolean);
