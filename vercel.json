@@ -1,21 +1,18 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/",
-      "has": [{ "type": "host", "value": "turma.foundersos.com.br" }],
-      "destination": "/turma/index.html"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/guias/obsidian-para-founders",
-      "destination": "/guias/onde-guardar-a-memoria-da-empresa/",
-      "permanent": true
+      "src": "/guias/obsidian-para-founders/?",
+      "status": 308,
+      "headers": { "Location": "/guias/onde-guardar-a-memoria-da-empresa/" }
     },
+
     {
-      "source": "/guias/obsidian-para-founders/",
-      "destination": "/guias/onde-guardar-a-memoria-da-empresa/",
-      "permanent": true
-    }
+      "//": "Raiz do subdominio da turma serve a pagina da turma. Precisa ser `routes` e nao `rewrites`: rewrites so valem depois do filesystem, e la a raiz ja casa com o index.html da pagina individual.",
+      "src": "/",
+      "has": [{ "type": "host", "value": "turma.foundersos.com.br" }],
+      "dest": "/turma/index.html"
+    },
+
+    { "handle": "filesystem" }
   ]
 }
