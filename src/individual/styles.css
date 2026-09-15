@@ -69,7 +69,6 @@
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-
 * {
   box-sizing: border-box;
 }
@@ -724,7 +723,7 @@ main {
 
 .hero-product-plane {
   position: relative;
-  padding: 48px 0 82px;
+  height: 930px;
   background:
     linear-gradient(
       90deg,
@@ -763,48 +762,18 @@ main {
 }
 
 .hero-product-stage {
-  position: relative;
+  position: absolute;
+  top: 48px;
+  left: 50%;
   width: min(calc(100vw - 56px), 1740px);
-  margin: 0 auto;
+  height: 800px;
   transform-origin: 50% 0;
+  translate: -50% 0;
 }
 
 .hero-visual-view {
-  position: relative;
-}
-
-/* --------------------------------------------------------------------------
-   Janela do hero com a gravacao do sistema
-   A moldura continua a mesma; o corpo vira um retangulo com o aspecto exato
-   do arquivo (1716x976 depois do corte da barra do Chrome), para o video
-   nao ser esticado nem cortado no desktop.
-   -------------------------------------------------------------------------- */
-.hero-video-shell {
-  /* Três tetos ao mesmo tempo:
-       100%    — nunca passa do container (que já desconta as gutters);
-       1288px  — largura máxima de projeto, em monitores grandes;
-       80vh    — em monitores baixos (notebook 1366x768, 1920x1080 com a barra
-                 de tarefas) a largura era o único limite e o vídeo, com o
-                 aspecto ~16:9, ficava mais alto que a tela. Aqui a largura é
-                 derivada da altura disponível (80vh convertidos pelo mesmo
-                 aspecto do arquivo), então a janela encolhe junto com o
-                 monitor sem mudar de proporção nem de enquadramento. */
-  width: min(100%, 1288px, calc(80vh * 1716 / 976));
-  margin: 0 auto;
-}
-
-.obsidian-frame-body.vault-video-body {
-  display: block;
-  height: auto;
-  aspect-ratio: 1716 / 976;
-  background: #05100b;
-}
-
-.vault-video-body .vault-video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  position: absolute;
+  inset: 0;
 }
 
 .hero-obsidian-shell {
@@ -3960,19 +3929,6 @@ main {
   background: var(--paper-deep);
 }
 
-/* Chamada da coluna da esquerda enquanto a turma está em lista de espera —
-   ocupa o lugar que era do preço. As regras `.price*` abaixo continuam aqui
-   para quando as inscrições reabrirem com valor na página. */
-.price-lead {
-  margin-top: 32px;
-  max-width: 13ch;
-  font-family: var(--font-display);
-  font-size: clamp(30px, 2.4vw, 40px);
-  font-weight: 500;
-  line-height: 1.06;
-  letter-spacing: -0.035em;
-}
-
 .price {
   display: flex;
   align-items: flex-start;
@@ -4070,37 +4026,6 @@ main {
   font-family: var(--font-mono);
   font-size: 10px;
   text-transform: uppercase;
-}
-
-/* Próxima turma — bloco de status dentro do CTA final */
-.cohort-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px 30px;
-  margin-top: 26px;
-  padding: 16px 20px;
-  border: 1px solid var(--line);
-  background: var(--paper-deep);
-}
-
-.cohort-meta > div {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.cohort-meta span {
-  color: #90948e;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.cohort-meta strong {
-  color: var(--ink);
-  font-size: 13px;
-  font-weight: 500;
 }
 
 /* Footer */
@@ -4557,15 +4482,6 @@ main {
   color: #929b96;
 }
 
-.theme-dark .cohort-meta {
-  border-color: #343b37;
-  background: #111512;
-}
-
-.theme-dark .cohort-meta strong {
-  color: #f1f4f2;
-}
-
 .theme-dark .cta-column .button-dark {
   background: #13ad6c;
   color: #fff;
@@ -4627,7 +4543,12 @@ main {
   }
 
   .hero-product-plane {
-    padding: 70px 0 20px;
+    height: 640px;
+  }
+
+  .hero-product-stage {
+    top: 70px;
+    height: 550px;
   }
 
   .operating-window {
@@ -4858,17 +4779,13 @@ main {
   }
 
   .hero-product-plane {
-    padding: 52px 0 18px;
+    height: 520px;
   }
 
   .hero-product-stage {
+    top: 52px;
     width: calc(100% - 24px);
-  }
-
-  /* No celular a tela cheia da gravacao ficaria ilegivel: o corpo fica mais
-     alto e o video enquadra o centro, onde acontece a acao. */
-  .obsidian-frame-body.vault-video-body {
-    aspect-ratio: 5 / 4;
+    height: 450px;
   }
 
   .operating-window {
@@ -6332,19 +6249,13 @@ main {
     display: block;
   }
 
-  /* O header tem 68px e é sticky com z-index alto: com top menor que isso o
-     topo do diagrama (o rótulo "AÇÃO" e os chips dos conectores) ficava
-     escondido atrás dele enquanto a lista rolava.
-     O `top` cola exatamente na base do header — assim o fundo opaco do bloco
-     não deixa nenhuma fresta por onde a lista apareça — e o respiro do
-     diagrama vem do padding, por dentro. */
   .layer-visual {
     position: sticky;
-    top: 68px;
+    top: 62px;
     z-index: 2;
     min-height: 0;
     margin-bottom: 26px;
-    padding: 22px 0 16px;
+    padding: 12px 0 16px;
     /* opaco: a lista rola por baixo do diagrama */
     background: var(--black);
   }
@@ -6373,9 +6284,8 @@ main {
 }
 
 @media (max-width: 760px) {
-  /* Aqui o header encolhe para 60px. */
   .layer-visual {
-    top: 60px;
+    top: 54px;
   }
 
   .layer-svg {
@@ -6391,10 +6301,8 @@ main {
   }
 }
 
-/* Formulário de interesse na turma
-   Herda a moldura do antigo bloco de agendamento (mesmo fundo, mesmo brilho
-   verde, mesma tipografia) — só o conteúdo do cartão mudou. */
-.interest-section {
+/* Calendário incorporado */
+.schedule-section {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -6402,14 +6310,7 @@ main {
   border-bottom: 1px solid rgba(28, 29, 31, 0.12);
 }
 
-/* Âncora invisível de compatibilidade (#agendar). */
-.anchor-alias {
-  display: block;
-  height: 0;
-  scroll-margin-top: 90px;
-}
-
-.interest-glow {
+.schedule-glow {
   position: absolute;
   z-index: -1;
   top: 19%;
@@ -6428,36 +6329,34 @@ main {
   pointer-events: none;
 }
 
-.interest-container {
+.schedule-container {
   position: relative;
 }
 
-.interest-heading {
+.schedule-heading {
   margin: 0 auto 46px;
   text-align: center;
 }
 
-.interest-heading h2 {
+.schedule-heading h2 {
   margin-top: 14px;
   font-family: var(--font-display);
-  font-size: clamp(40px, 5vw, 66px);
+  font-size: clamp(48px, 6vw, 82px);
   font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.055em;
+  line-height: 0.98;
+  letter-spacing: -0.065em;
 }
 
-.interest-heading > p:last-child {
-  max-width: 520px;
-  margin: 18px auto 0;
+.schedule-heading > p:last-child {
+  margin-top: 18px;
   color: #687069;
   font-size: 15px;
-  line-height: 1.55;
 }
 
-.interest-card {
-  width: min(100%, 620px);
-  margin: 0 auto;
-  padding: 38px;
+.calendar-shell {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
   border: 1px solid rgba(28, 29, 31, 0.14);
   border-radius: 18px;
   background: #fff;
@@ -6466,127 +6365,23 @@ main {
     0 28px 90px rgba(17, 29, 22, 0.12);
 }
 
-.interest-fields {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-/* Telefone ocupa a linha inteira: é o último campo e fica sozinho. */
-.interest-field:last-child {
-  grid-column: 1 / -1;
-}
-
-.interest-field {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 7px;
-}
-
-.interest-field > span {
-  color: #4d5450;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-}
-
-.interest-field input {
+.calendar-embed {
   width: 100%;
-  min-height: 46px;
-  padding: 0 14px;
-  border: 1px solid #dfe2e4;
-  border-radius: 9px;
-  background: #fbfcfc;
-  color: var(--ink);
-  font-family: inherit;
-  font-size: 15px;
-  transition:
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    background 0.18s ease;
+  height: min(790px, 84vh);
+  min-height: 680px;
+  overflow: auto;
 }
 
-.interest-field input::placeholder {
-  color: #a9aeb2;
-}
-
-.interest-field input:focus-visible {
-  border-color: var(--green-deep);
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(10, 168, 102, 0.14);
-  outline: none;
-}
-
-.interest-field input:disabled {
-  background: #f2f4f3;
-  color: #8b918e;
-}
-
-.interest-form > .button {
-  margin-top: 24px;
-}
-
-.interest-form > small {
-  display: block;
-  margin-top: 14px;
-  color: #8b918e;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.06em;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.interest-error {
-  margin-top: 18px;
-  padding: 11px 14px;
-  border: 1px solid rgba(190, 62, 46, 0.22);
-  border-radius: 9px;
-  background: rgba(190, 62, 46, 0.06);
-  color: #a8372a;
-  font-size: 13px;
-  line-height: 1.45;
-}
-
-.interest-spinner {
-  animation: interest-spin 0.9s linear infinite;
-}
-
-@keyframes interest-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.interest-success {
-  padding: 26px 0;
-  text-align: center;
-}
-
-.interest-success-mark {
+.calendar-fallback {
   display: inline-flex;
-  width: 46px;
-  height: 46px;
+  min-height: 48px;
   align-items: center;
   justify-content: center;
-  margin-bottom: 18px;
-  border-radius: 50%;
-  background: var(--green-soft);
-  color: var(--green-deep);
-}
-
-.interest-success h3 {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-}
-
-.interest-success p {
-  margin-top: 8px;
-  color: #687069;
-  font-size: 15px;
+  margin: 28px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: #111412;
+  color: #fff;
 }
 
 /* Mais baixo que isso o diagrama fixo tomaria a tela inteira e não sobraria
@@ -6888,40 +6683,32 @@ main {
     align-items: center;
   }
 
-  .interest-section {
+  .schedule-section {
     padding: 88px 0 96px;
   }
 
-  .interest-heading {
+  .schedule-heading {
     margin-bottom: 30px;
   }
 
-  .interest-heading h2 {
-    font-size: clamp(34px, 10vw, 46px);
+  .schedule-heading h2 {
+    font-size: clamp(42px, 13vw, 58px);
   }
 
-  .interest-heading > p:last-child {
-    max-width: 320px;
+  .schedule-heading > p:last-child {
+    max-width: 290px;
     margin-right: auto;
     margin-left: auto;
     line-height: 1.5;
   }
 
-  /* Uma coluna: dois campos lado a lado a 375px deixam o rótulo e o
-     placeholder truncados. */
-  .interest-card {
-    padding: 24px 20px;
+  .calendar-shell {
     border-radius: 13px;
   }
 
-  .interest-fields {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 14px;
-  }
-
-  /* 16px evita o zoom automático do Safari ao focar o campo. */
-  .interest-field input {
-    font-size: 16px;
+  .calendar-embed {
+    height: 760px;
+    min-height: 760px;
   }
 }
 
@@ -6947,17 +6734,15 @@ main {
 }
 
 /* --------------------------------------------------------------------------
-   Escala das secoes abaixo do hero — pagina da turma.
+   Escala das secoes abaixo do hero.
 
-   O desenho foi feito para 1920px, mas os titulos chegam ao tamanho maximo ja
-   por volta de 1450px. Resultado: num monitor de 1536px eles ocupam quase a
-   mesma largura fisica de um monitor grande, e a pagina parece apertada.
+   O desenho foi feito para 1920px, mas os titulos chegavam ao maximo ja por
+   volta de 1450px. Num monitor de 1536px eles ficavam quase do mesmo tamanho
+   fisico de um monitor grande, e a pagina parecia apertada. Aqui o
+   coeficiente em vw e recalculado para o maximo so ser atingido em 1920px:
+   telas grandes ficam identicas, menores encolhem junto.
 
-   Aqui o coeficiente em vw e recalculado para o maximo so ser atingido em
-   1920px. Monitores de 1920px ou mais continuam identicos; telas menores
-   recebem titulos proporcionalmente menores (a 1536px, 80% do maximo).
-
-   Vale so para a turma: a landing individual (www) fica exatamente como era.
+   O hero fica fora de proposito — o tamanho dele ja estava aprovado.
    -------------------------------------------------------------------------- */
 @media (min-width: 1025px) {
   .source-rail ul {
@@ -7005,15 +6790,15 @@ main {
     padding: clamp(40px, 3.75vw, 72px);
   }
 
-  .price-lead {
-    font-size: clamp(30px, 2.08vw, 40px);
+  .price strong {
+    font-size: clamp(62px, 5.00vw, 96px);
   }
 
   .cta-column h2 {
     font-size: clamp(40px, 3.33vw, 64px);
   }
 
-  .interest-heading h2 {
-    font-size: clamp(40px, 3.44vw, 66px);
+  .schedule-heading h2 {
+    font-size: clamp(48px, 4.27vw, 82px);
   }
 }
